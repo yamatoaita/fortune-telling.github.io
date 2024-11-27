@@ -62,12 +62,12 @@ body{
   .speech_box{
     position: relative;
     top:    420px;
-    right:  120px;
+    right:  150px;
 
     
     /*パソコン基準値　height:100px, width:500px*/
     height: 50px;
-    width: 250px;
+    width: 300px;
     font-size: 15px;
     line-height: 50px; /*FlexBoxによる位置調整オプション*/
   }
