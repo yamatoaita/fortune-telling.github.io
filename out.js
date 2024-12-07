@@ -12,7 +12,10 @@ class DialogueSystem{
         this.entry = entry;
         this.check_object = check_object;//会話ログのindex番号を表示させるオブジェクト。デバッグ用の道具です。
 
-     
+        this.dialogue_changed_flg = 0; //会話が変わったかを示す。０は変わってない。１は変わったことを示す。
+        this.order_changed_flg = 0;
+
+        this.command_makeid_flg = 0;//新規登録時に、ユーザー識別idを作るflgです
     }
 
     do(command="",arg=""){ 
@@ -59,25 +62,24 @@ class DialogueSystem{
             ➃命令の種別に応じた、関数を実行する
         */
         }
-     
-        for(var i = 0; i <= 3; i++){
-            console.log("a")
-            console.log(`key ${i} and value is ${this.orders.get(i)}`)
-        }
-        console.log(`
-            ${this.orders} yeah it is 命令パック
-            `)
+        
+      
         this.order = this.orders.get(this.order_index);
        
         //Dictionaryのlist_orderから、order_indexをkeyとして命令パックを取り出す
         
         this.order_arg = this.order[1]; //引数を保存
         this.command = this.order[0];
-      
-        
+   
         
         //if条件　命令種別を分析
-        console.log(`#############Before do, order_index is ${this.order_index},order is ${this.command}#, dialogue index is ${this.dialogue_index}########`);
+        /*console.log(`【do実行前】;
+【命令:order index 「 ${this.order_index}」をカギとして、「${this.command}」を実行しました】
+【会話: ${message}】`)
+        this.dialogue_changed_flg_4before = 0;
+        */
+       
+
         if(this.command == "next"){
             this.next_dialogue();
         }else if(this.command == "to_dialogue"){
@@ -98,12 +100,99 @@ class DialogueSystem{
             this.input_birth_day();
         }else if(this.command == "link"){
             this.link();
+        }else if(this.command == "load"){
+            this.load_dialogue_4start();
         }
         else{
             alert("it is out of command");
         }// end of if
 
-        console.log(`order_index is ${this.order_index}, dialogue_index is ${this.dialogue_index}`)
+        this.show_log_4debug();//デバッグ用のconsole.log表示
+        
+    }
+
+    show_log_4debug(){//console.logに表示させるための機能
+
+        var font_dict = new Map();
+        font_dict.set(0,`color:black;font-weight:normal`);//非太字、黒色にする記述
+        font_dict.set(1,`color:red;font-weight:bold`);//太字、赤色にする記述
+
+        /** ===========  会話についてのログ製作 ===============**/
+        if(this.dialogue_changed_flg==1 || this.dialogue_changed_flg==2){//flg 1=会話変更、 2=命令実行後に会話変更予定、 0=会話変更なし
+            if(this.dialogue_set[this.dialogue_index]===undefined){//undefinedは次の会話ログが無い場合に取得されます
+                var message = ` 会話インデックス番号は「%c${this.dialogue_index}%c」に変わりました。 会話もフキダシの文に更新されました。 %c現在、表示されている会話が最後の会話文です%c%c%c。 `     
+                var dialogue_logfont_pattern = [1,0,1,0,0,0];//%cの設定を１（赤太字）、0（黒通常太さ)で行う。そのためのdictionary型
+            }else{
+                if(this.command == "check_<change_d&s_index>"){//確認する（任意の場所へ移動）は表示する会話が二通りあるので　別処理
+                    var raw_dialogueindex = this.orders.get(this.order_index)[1];//会話インデックス番号
+                  
+                    var dialogue_of_yes = this.dialogue_set[this.dialogue_index];
+                    var dialogue_of_no = this.dialogue_set[raw_dialogueindex];
+                    var message = `会話インデックス番号は「%c${this.dialogue_index}%c」に変わりました。会話もフキダシの文に更新されました。次は　はいの場合 %c${dialogue_of_yes}%cを。いいえの場合、%c${dialogue_of_no}%cをフキダシに表示されます。`
+                }else{//通常の処理
+                    var message = `会話インデックス番号は「%c${this.dialogue_index}%c」に変わりました。会話もフキダシの文に更新されました。次は %c${this.dialogue_set[this.dialogue_index]}%cをフキダシに表示されます。%c%c`
+                }
+                    var dialogue_logfont_pattern = [1,0,1,0,1,0];//%cの設定を１（赤太字）、0（黒通常太さ)で行う。そのためのdictionary型
+            }
+            
+        }else{//会話ログが次ない場合
+            var message = `今回、%c%c%c会話文は変更されてません%c%c%c。`
+            var dialogue_logfont_pattern = [0,0,1,0,0,0];//%cの設定を１（赤太字）、0（黒通常太さ)で行う。そのためのdictionary型
+        }
+
+        if(this.order_changed_flg==1){//flg=1は　命令完了
+            var order_messasge = `「%c${this.command}%c」を実行しました。命令インデックス番号は「%c${this.order_index}%c」に変わりました。次は「%c${this.orders.get(this.order_index)[[0]]}%c」を実行します。%c%c`
+            var order_logfont_pattern = [1,0,1,0,1,0,0,0]//%cの設定を１（赤太字）、0（黒通常太さ)で行う。そのためのdictionary型
+        }else if(this.order_changed_flg==2){//flg=2はボタン入力待ち等　実行待ち
+            if(this.command == "check_<change_d&s_index>"){//確認する（任意の場所へ移動）は命令が二つ設定されているため別処理。
+                var raw_orderindex = this.orders.get(this.order_index)[1];//命令
+                var order_messasge = `「%c${this.command}%c」の実行待機中です。命令インデックス番号は実行後「%c${this.order_index+1}%c」に変わります。次ははいの場合「%c${this.orders.get(this.order_index+1)[[0]]}%c」、いいえの場合「%cto_関数を実行後、${this.orders.get(raw_orderindex)[0]}%c」を実行します。`
+            }else{//通常処理
+                try{//次の命令がある場合の処理
+                    var order_messasge = `「%c${this.command}%c」の実行待機中です。命令インデックス番号は実行後「%c${this.order_index+1}%c」に変わります。次は「%c${this.orders.get(this.order_index+1)[[0]]}%c」を実行します。%c%c`
+                }catch(error){//次の命令がない場合、undefinedを読み込みエラーとなる。
+                    var order_messasge = `「%c${this.command}%c」の実行待機中です。%cこれがこの命令パック最後の命令です%c%c%c%c%c。`
+                }
+            }
+            
+            var order_logfont_pattern = [1,0,1,0,1,0,1,0]//%cの設定を１（赤太字）、0（黒通常太さ)で行う。そのためのdictionary型
+        }
+        else{//命令が無かった場合
+            var order_messasge = `「%c%c%c%c%c命令インデックス番号に変化はありません%c%c%c。`
+            var order_logfont_pattern = [0,0,0,0,1,0,0,0]//%cの設定を１（赤太字）、0（黒通常太さ)で行う。そのためのdictionary型
+        }
+
+        console.log(`%c【do実行後】%c;
+【%c命令%c: ${order_messasge}】
+【%c会話%c: ${message}】`,
+                    `font-weight:bold;`,`font-weight:normal;`,
+    `font-weight:bold;`,`font-weight:normal;`,font_dict.get(order_logfont_pattern[0]),font_dict.get(order_logfont_pattern[1]),font_dict.get(order_logfont_pattern[2]),font_dict.get(order_logfont_pattern[3]),font_dict.get(order_logfont_pattern[4]),font_dict.get(order_logfont_pattern[5]),font_dict.get(order_logfont_pattern[6]),font_dict.get(order_logfont_pattern[7]),
+    `font-weight:bold;`,`font-weight:normal;`,font_dict.get(dialogue_logfont_pattern[0]),font_dict.get(dialogue_logfont_pattern[1]),font_dict.get(dialogue_logfont_pattern[2]),font_dict.get(dialogue_logfont_pattern[3]),font_dict.get(dialogue_logfont_pattern[4]),font_dict.get(dialogue_logfont_pattern[5]),
+        );
+        this.dialogue_changed_flg = 0;//会話が切り替わった指標を初期化する
+        this.order_changed_flg = 0;//命令が実行された指標を初期化する
+    }
+
+    load_dialogue_4start(){
+        //会話パックの最初のログを読み込むための関数。
+        this.load_dialogue();
+        //ログを読み込む
+
+        this.btn1.textContent = "次へ";
+        this.btn2.textContent = "ー";
+        //ここが開始時のみの記述
+        //ボタンの表示設定
+        this.btn1.addEventListener("click",()=>{
+            this.do();
+        },{once:true});
+        //ボタン１にイベント設定。
+
+        this.dialogue_index += 1;
+        //会話インデックスを更新分、１つ増加
+        this.order_index += 1;
+        this.order_changed_flg = 1;
+        //命令を終えたため、命令インデックスを一つ増加
+
     }
 
     load_dialogue(){
@@ -113,55 +202,75 @@ class DialogueSystem{
         //dialogue_indexは会話パックのインデックス番号である。
         //会話パックdialogue_setから、インデックス番号を使って会話を取り出す
 
-        try{
-            this.speech.innerHTML = this.contents_of_speech();
-            //テンプレートリテラル用
-        }catch(error){
-            this.speech.innerHTML = this.contents_of_speech;
-            //テンプレートリテラルでない場合
-        }//doの最後に、会話文を更新させる。
-       
+        
+        //<command>分析・読み取り・置換
+        var string_command_list = this.contents_of_speech.matchAll(/#([^#]+)#/g);
+        string_command_list.forEach(command =>{//コマンド式テンプレートリテラル法
+            
+            switch(command[1]){//ここに、処理するコマンドを書く
+                case "command_user_name":
+                    this.contents_of_speech = this.contents_of_speech.replace("#command_user_name#",this.user_name);
+                    
+                case "command_birth_year":
+                    this.contents_of_speech = this.contents_of_speech.replace("#command_birth_year#",this.birth_year);
+                case "command_birth_month":
+                    this.contents_of_speech = this.contents_of_speech.replace("#command_birth_month#",this.birth_month);
+                case "command_birth_day":
+                    this.contents_of_speech = this.contents_of_speech.replace ("#command_birth_day#",this.birth_day);
+            }
+        });
+        this.speech.innerHTML = this.contents_of_speech;
+        
+        this.dialogue_changed_flg = 1;//会話を変えたことを記録
+
     }
 
     next_dialogue(){
         //引数はなし
         
-        this.dialogue_index += 1;
-        //会話パックのインデックス番号を増加
        
-        
-        this.order_index += 1;
-        //命令を一つ終えたため、命令インデックスを１つ増加
         var next_order =this.orders.get(this.order_index)[0];
+        
+        this.btn1.textContent = "次へ";
+        this.btn2.textContent = "ー";
+        //ボタンの表示設定
+
         if(next_order == "check_ds_index" || next_order == "check_ds_pack"){           
             this.do();
 
             //次の命令がcheckの場合は、ボタンセットを表示させるcheck命令を実行させる
         }else{
-            this.btn1.textContent = "ー";
-            this.btn2.textContent = "ー";
-            this.speech.addEventListener("click", () =>{
+            
+            this.btn1.addEventListener("click", () =>{
                 this.do();                
             }, { once: true });
             //speechへのイベント設定は next_order="check"の時はしません。
             //してしまうと、speechのイベントが二重になります。
             //そしてシステムの一大バグ「なぜか会話が一つ飛び」(格闘4時間）を引き起こしてしまいます。
         }
-        console.log(`it is next. order_index is ${this.order_index}. dialogue is ${this.dialogue_set[this.dialogue_index]}`)
+       
         
         this.load_dialogue();
         //会話文を更新     
+
+        this.dialogue_index += 1;
+        //会話パックのインデックス番号を増加
+       
+        
+        this.order_index += 1;
+        this.order_changed_flg = 1;
+        //命令を一つ終えたため、命令インデックスを１つ増加
     }
 
     to_dialogue(){//【to_関数　手順➀】
         var second_order_arg = this.order[2];
-        console.log(`second order argument is ${second_order_arg}. this.order is ${this.order}`)
+    
         //任意の会話インデックス値を取得
 
         this.dialogue_index = second_order_arg;
         //任意の会話になるように、会話インデックス番号を変更
         //必ずto_order()命令インデックス指定関数も一緒に実行してください。
-        console.log(`it is back. dialogue index is ${this.dialogue_index}`)
+     
         this.load_dialogue();
  
     }
@@ -169,6 +278,7 @@ class DialogueSystem{
     to_order(){//【to_関数　手順➁】     
 
         this.order_index = parseInt(this.order_arg);
+        this.order_changed_flg = 1;
         //任意の命令になるように、命令インデックス番号を変更
         this.do();
         //更新された命令インデックス番号によって、命令を更新
@@ -183,7 +293,7 @@ class DialogueSystem{
         //ボタンの表示設定
     }
     check_change_ds_index(){//checkの分岐によって、会話パックのインデックス番号を変える命令です
-        console.log(`it is check. order_index is ${this.order_index}`)
+  
         //arg1:to_order用　　arg2:to_dialogue用
         this.check_btnset();
         //btn等の設定
@@ -194,15 +304,19 @@ class DialogueSystem{
                 //一方のイベントで、命令が進んだら　押されなかったボタンを無効にする
                 //すなわち、this.order[0] == "next"になってたら以下のイベントを実行しない
                 this.next_dialogue();
-                this.btn1.textContent = "ー"
+                this.btn1.textContent = "次へ"
                 this.btn2.textContent = "ー"
+
+                if(this.command_makeid_flg){
+                    this.save_data();//id製作フラグが立っていたら、idを製作してユーザーデータを一時保存。
+                }
             }
             //【はい】を押した場合のイベント
         },{once:true});     
 
         this.btn2.addEventListener("click", ()=> {
             if(this.order[0]=="check_<change_d&s_index>"){
-                this.btn1.textContent = "ー"
+                this.btn1.textContent = "次へ"
                 this.btn2.textContent = "ー"
 
                 //checkは２つのボタンにイベントをつける。
@@ -215,7 +329,9 @@ class DialogueSystem{
             }
             //【いいえ】を押した時のイベント
         },{once:true});   
-        //ボタンのイベント設定
+        
+        this.dialogue_changed_flg =2;
+        this.order_changed_flg = 2;//ボタン押してもらうので、待機中判定に
     }
 
     check_change_ds_pack(){//checkの分岐によって、会話・命令パックを切り替える命令です
@@ -231,10 +347,11 @@ class DialogueSystem{
             //命令ボックスを移行するため、すべてのインデックス番号を初期化
             this.dialogue_set = this.order_arg[0];
             this.orders  = this.order_arg[1];
+           
             //新しい命令ボックスから、それぞれ会話パック、命令パックを取り出し、更新。
             this.do();
             //画面を更新
-        　}
+        }
         },{once:true});
 
         this.btn2.addEventListener("click", ()=>{
@@ -244,22 +361,24 @@ class DialogueSystem{
                 //命令ボックスを移行するため、すべてのインデックス番号を初期化
                 this.dialogue_set = second_order_arg[0];
                 this.orders  = second_order_arg[1];
-                //新しい命令ボックスから、それぞれ会話パック、命令パックを取り出し、更新。
+               //新しい命令ボックスから、それぞれ会話パック、命令パックを取り出し、更新。
                 this.do();
                 //画面を更新
             }
         },{once:true});
-
+        
+        this.order_changed_flg = 2;//ボタン押してもらうので、待機中判定に
     }
 
     link(){
-        console.log("this is link")
+       
         window.location.href = this.order_arg;
+        this.order_changed_flg = 1;
         //引数にあるhtmlリンクを表示させる
     }
 
     input_name(){
-        console.log(`it is input-n. order_index is ${this.order_index}`);
+      
        
         this.entry.placeholder = this.order_arg;
         this.entry.setAttribute("type", "text");
@@ -269,10 +388,9 @@ class DialogueSystem{
         //entryやボタンの設定
 
         this.btn1.addEventListener("click",() => {
-            window.localStorage.name = this.entry.value;
-            //entryに入力されたデータをkey=nameとしてローカルストレージに保存
             this.user_name = this.entry.value;
-            //会話パックのテンプレートリテラルに使います。
+            //entryに入力されたデータをkey=nameとしてローカルストレージに保存
+            
             this.entry.value = ""
             //entryに入力されたデータを初期化。お掃除です。
             this.order_index += 1;
@@ -280,6 +398,7 @@ class DialogueSystem{
             this.do();
             //次の命令に移行させる
         },{ once: true })
+        this.order_changed_flg  = 2;////ボタン押してもらうので、待機中判定に
         
     }
 
@@ -292,16 +411,17 @@ class DialogueSystem{
         //entryやボタンの設定
 
         this.btn1.addEventListener("click",() =>{
-            window.localStorage.birth_year = this.entry.value;
+            this.birth_year = this.entry.value;
             //entryに入力されたデータをkey=birth_yearとしてローカルストレージに保存
             this.entry.value = ""
             //entryに入力されたデータを初期化。お掃除です。
             this.order_index += 1;
+           
             //命令を一つ終えたため、命令インデックスを１つ増加
             this.do();
             //次の命令に移行させる
         },{ once: true })
-        
+        this.order_changed_flg = 2;//ボタン押してもらうので、待機中判定に
     }
 
     input_birth_month(){
@@ -313,16 +433,18 @@ class DialogueSystem{
         //entryやボタンの設定
 
         this.btn1.addEventListener("click",()=>{
-            window.localStorage.birth_month = this.entry.value;
+            this.birth_month = this.entry.value;
             //entryに入力されたデータをkey=birth_monthとしてローカルストレージに保存
             this.entry.value = ""
             //entryに入力されたデータを初期化。お掃除です。
+            this.command_makeid_flg = 1;//ユーザー識別id製作フラグを立てる
+            
             this.order_index += 1;
             //命令を一つ終えたため、命令インデックスを１つ増加
             this.do();
             //次の命令に移行させる
         },{ once: true })
-        
+        this.order_changed_flg = 2;//ボタン押してもらうので、待機中判定に
     }
 
     input_birth_day(){
@@ -334,34 +456,51 @@ class DialogueSystem{
         //entryやボタンの設定
 
 
-        /* 　え　これ　必要なの？？？？
-        this.speech.addEventListener("click", () =>{
-            this.do();             
-        }, { once: true });
-        */
-
         this.btn1.addEventListener("click",()=>{
-            window.localStorage.birth_day = this.entry.value;
+            this.birth_day = this.entry.value;
             //entryに入力されたデータをkey=birth_dayとしてローカルストレージに保存
             this.entry.value = ""
             //entryに入力されたデータを初期化。お掃除です。
-            this.order_index += 1;
-            //命令を一つ終えたため、命令インデックスを１つ増加
 
-            this.dialogue_index += 1;
-            this.load_dialogue();
-            //会話文を一つ進ませる
-            this.do();
-            //次の命令に移行させる
+            this.next_dialogue();
+          
+            //一つ会話を進ませる
+           
         },{ once: true })
-        
+        this.order_changed_flg = 2;//ボタン押してもらうので、待機中判定に
     }
 
-}
+    save_data(){//ユーザー識別idを製作し、データを保存します
+        var id = `${this.user_name}${this.birth_year}${this.birth_month}${this.birth_day}`;
+  
+        var user_data = [
+            this.user_name,
+            this.birth_year,
+            this.birth_month,
+            this.birth_day
+        ]
+        var user_data_pack = new Map();
+        user_data_pack.set(id,user_data);
+        var packed_object_map = JSON.stringify(Array.from(user_data_pack.entries()));
+        //localStorageでは生のobject mapを保存できません。
+        //そのため、JSON形式に変換して保存します。
+        window.localStorage.data = packed_object_map;
+        //データをストレージに保存
+    }
+
+    get_userdata(){
+        this.id = `${this.user_name}${this.birth_year}${this.birth_month}${this.birth_day}`;        
+        var raw_data = window.localStorage.getItem("data");
+        this.user_savedata = new Map(JSON.parse(raw_data));
+        //JSON形式のデータを取り出します
+        //その後、JSON形式を解凍します。
+        //そして、 data.get(id)でユーザーデータ（LIST型）を取り出せます。
+    }
+}                                                                     
 
 class SiteSystem{
     constructor(){
-       
+    
         //#####################ここはデバックようの記述。　あとで削除すること＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
         window.localStorage.name = "";
         window.localStorage.birth_day = "";
@@ -402,9 +541,16 @@ class SiteSystem{
             第一章『会話パックの設定方法』
                 1.「定型文」
                     this.dialogues_名前 =[];　が定型文です。
-                2.「テンプレートリテラル」
-                    テンプレートリテラルを使うときはアロー関数を使います。
-                    () => ` この${変数}は例文です`
+                2.「コマンド式、テンプレートリテラル」
+                    テンプレートリテラルは使えません。thisが別class間で提供されないことが原因とみています。
+                    そのため、コマンドを文字列に入れることでテンプレートリテラルの動作を実装します。
+                    コマンドはDialogue Systemにて分析・読み取られ、文字列を置換し埋め込みます。
+                    コマンド一覧が以下の通りです。
+                        "I am <command_user_name>"　=　`I am ${this.user_name}`
+                        "私の誕生年は<command_birth_year>" = `私の誕生年は${this.birth_year}`
+                        "私の誕生月は<command_birth_month>" = `私の誕生月は${this.birth_month}`
+                        "私の誕生日は<command_birth_day>" = `私の誕生日は${this.birth_day}`
+
             
             第二章『命令パックの設定方法』
                 1.「定型文」
@@ -472,10 +618,10 @@ class SiteSystem{
       
 
         this.dialogues_pattern_register = [//【新規登録】会話パック
-                                "",
+                             
                                 "<br>ようこそ　占いの館へ。<br>あなたに会える日を待っていましたよ。", //0
                                 "<br>まずは、お名前と生年月日を教えてくれますか？<br>(後から変更不可)",     //1
-                                () =>`<br>${window.localStorage.name}さんは<br>${window.localStorage.birth_year}年${window.localStorage.birth_month}月${window.localStorage.birth_day}日生まれですね？`,//1                               //1は　あとで更新必要なので””にしとく。確認ダイアログです。
+                                "<br>#command_user_name#さんは<br>#command_birth_year#年#command_birth_month#月#command_birth_day#日生まれですね？",//1                               //1は　あとで更新必要なので””にしとく。確認ダイアログです。
                                 "<br>ありがとうございます。<br>では、占いの館について説明いたします。",          //3
                                 "<br>占いの館では様々な占い師から、<br>色んな占いを受けることができます。",     //4
                                 "<br>予約の説明です。<br>明日に行う占い師を予約できます。",                    //5
@@ -486,33 +632,42 @@ class SiteSystem{
                                 "<br>では、当店の占いをお楽しみください。"                                   //10
         ]   
         {//【新規登録】命令パック
+            var orders = [
+                ["load"],
+                ["next"],
+                ["input_name","名前を入力してください"],
+                ["input_birth_year","生まれ年は何年ですか？　　例:2003"],
+                ["input_birth_month","生まれ月は？　　　例:3"],
+                ["input_birth_day","生まれた日はいつですか？　　　例:31"],
+                ["check_<change_d&s_index>",1,1],
+                ["next"],
+                ["next"],
+                ["next"],
+                ["next"],
+                ["next"],
+                ["next"],
+                ["check_<change_d&s_index>",7,4],
+                ["link","index.html"]
+            ];
+            let i = 0;
             this.orders_pattern_register = new Map();
-            this.orders_pattern_register.set(0,["next"]);
-            this.orders_pattern_register.set(1,["next"]);
-            this.orders_pattern_register.set(2,["input_name","名前を入力してください"]);
-            this.orders_pattern_register.set(3,["input_birth_year","生まれ年は何年ですか？　　例:2003"]);
-            this.orders_pattern_register.set(4,["input_birth_month","生まれ月は？　　　例:3"]);
-            this.orders_pattern_register.set(5,["input_birth_day","生まれた日はいつですか？　　　例:31"]);
-            this.orders_pattern_register.set(6,["check_<change_d&s_index>",1,1]);
-            this.orders_pattern_register.set(7,["next"]);
-            this.orders_pattern_register.set(8,["next"]);
-            this.orders_pattern_register.set(9,["next"]);
-            this.orders_pattern_register.set(10,["next"]);
-            this.orders_pattern_register.set(11,["next"]);
-            this.orders_pattern_register.set(12,["next"]);
-            this.orders_pattern_register.set(13,["check_<change_d&s_index>",7,4]);
-            this.orders_pattern_register.set(14,["link","index.html"])
+            orders.forEach((item) =>{
+                this.orders_pattern_register.set(i,item);
+                i += 1;
+            });
+            
+            
         }    
 
-        var user_name = "dummy,;"
-        this.dialogues_patern_login = [//【login】会話パック
+       
+        this.dialogues_pattern_login = [//【login】会話パック
             "<br>では、お名前を入力してください",
-            `${user_name}様ですね。<br>こちらへどうぞ`
+            `#command_user_name#様ですね。<br>こちらへどうぞ`
         ];
         {//【login】命令パック
             this.orders_pattern_login = new Map();
-            this.orders_pattern_login.set(0,["next"]);
-            this.orders_pattern_login.set(1,["input_judge_username","登録した名前を入力してください"]);
+            this.orders_pattern_login.set(0,["load"]);
+            this.orders_pattern_login.set(1,["input_judge_user_name","登録した名前を入力してください"]);
         }
 
 
@@ -529,8 +684,8 @@ class SiteSystem{
         }
         //----------------------------------------
 
-        this.dialogue_index = -1;
-        console.log(this.index_first_visit);
+        this.dialogue_index = 0;
+       
         //**********************************************
         
         this.show_receptionist();
@@ -562,7 +717,7 @@ class SiteSystem{
         //dialogue_set, speech, dialogue_index, list_order , btn1, btn2, entry ,check_object
         this.new_ds = new DialogueSystem( this.dialogues_check_register_or_login, this.speech, this.dialogue_index, this.orders_check_register_or_login ,this.btn1,this.btn2, this.entry);
         //this.tester = new DialogueSystem(this.dialogues_pattern_register, this.speech, this.dialogue_index, this.orders_pattern_register ,this.btn1,this.btn2, this.entry )
-        this.speech.addEventListener("click", () =>{
+        this.btn1.addEventListener("click", () =>{
             this.new_ds.do();
             //this.tester.do();                
         }, { once: true });
