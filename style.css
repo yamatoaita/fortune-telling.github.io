@@ -1,7 +1,11 @@
 /*基本　パソコン1280px用。スマホ（縦）は@mediaで480px対応に  タブレット960pxはどうしよう*/
 /*パソコン用の記述を書いた後に、@media (max-width: 1280px)でスマホ用の記述*/
 
+/* .class名、 #id名*/
 
+:root{
+    --plus_px: 310px;/*スマホ用のサイズを変更する変数*/
+}
 
 body{
     background-color: black;
@@ -23,7 +27,7 @@ body{
 .img_table{
     position: relative;
     right: 100px;
-    top: 200px;
+    top: calc(200px - var(--plus_px));
 }
 @media (max-width: 480px){
     .img_table{
@@ -32,7 +36,7 @@ body{
         height: 180px;
         position: relative;
         right: 50px;
-        top: 250px;
+        top: calc(250px - var(--plus_px));
         
     }
 }
@@ -45,7 +49,7 @@ body{
     width: 500px;    
 
     position: relative;
-    top: 220px;
+    top: calc(220px - var(--plus_px));
     right: 250px;
 
     color: rgb(0, 0, 0);
@@ -68,7 +72,7 @@ body{
 @media (max-width: 480px){
   .speech_box{
     position: relative;
-    top:    250px;
+    top:    calc(250px - var(--plus_px));
     right:  70px;
 
     
@@ -80,11 +84,52 @@ body{
 }
 @media (max-width: 480px){
     .speech_box::after{
-        top:-10px;
+        top:-9px;
         left: 35%;
         border-left: 20px solid transparent;
         border-right: 20px solid transparent;
         border-bottom: 10px solid rgb(97, 100, 100);
+    }
+}
+
+.booking{
+    /*基準値無し　ここで設定*/
+    width: 100px;
+    height: 100px; 
+}
+#booking_1{
+    position: relative;
+    top: calc(430px - var(--plus_px));
+    right: 200px;
+}
+@media(max-width: 480px){
+    #booking_1{
+        top: calc(430px  - var(--plus_px));
+        right: 100px;
+    }
+}
+
+#booking_2{
+    position: relative;
+    top: calc(324px - var(--plus_px));
+    right: 10px;
+}
+@media(max-width: 480px){
+    #booking_2{
+        top: calc(324px  - var(--plus_px));
+        left: 30px;
+    }
+}
+
+#booking_3{
+    position: relative;
+    top: calc(218px - var(--plus_px));
+    left: 180px;
+}
+@media(max-width: 480px){
+    #booking_3{
+        top: calc(219px  - var(--plus_px));
+        left: 160px;
     }
 }
 
@@ -95,14 +140,14 @@ body{
     height: 100px;
 
     position: relative;
-    top: 280px;
+    top: calc(280px - var(--plus_px));
     right: 15px;
     z-index: 2; /*画面の重なり順。数字が大きい程　最上面*/
 }
 @media (max-width: 480px){
     .receptionist{
         position:relative;
-        top: 320px;
+        top: calc(320px - var(--plus_px));
         left: 25px;
     }
 }
@@ -113,7 +158,7 @@ body{
 
     position :relative;
     right: 180px;
-    top: 230px;
+    top: calc(230px - var(--plus_px));
     z-index: 0;
 }
 @media (max-width: 480px){
@@ -121,7 +166,7 @@ body{
         width: 300px;
         height: 70px;
         position: relative;
-        top: 290px;
+        top: calc(290px - var(--plus_px));
         right: 65px;
     }
 }
@@ -134,24 +179,24 @@ body{
 }
 #btn1{
     position: relative;
-    top: 155.5px;
+    top: calc(155.5px - var(--plus_px));
     right: 140px;
 }
 @media (max-width: 480px) {
     #btn1{
-        top: 230px;
+        top: calc(230px - var(--plus_px));
         right: 55px;
     }
 }
 #btn2{
     position:relative;
-    top: 115.5px;
+    top: calc(115.5px - var(--plus_px));
     right: 40px;
 }
 @media (max-width:480px) {
 
     #btn2{
-        top: 230px;
+        top: calc(230px - var(--plus_px));
         right: 35px;
     }    
 }
@@ -162,7 +207,7 @@ body{
     height: 50px;
     z-index: 999;
     position: relative;
-    top: 65px;
+    top: calc(65px - var(--plus_px));
     left:55px; 
 }
 @media (max-width:480px) {
@@ -170,7 +215,7 @@ body{
 
         width: 100px;
         position: relative;
-        top: 175px;
+        top: calc(182px - var(--plus_px));
         left: 115px;
     } 
 }
