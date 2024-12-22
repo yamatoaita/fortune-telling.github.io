@@ -560,7 +560,7 @@ class DialogueSystem{
         ]
 
         const expires = new Date();
-        expires.setTime(expires.getTime() + 100000000);//2000
+        expires.setTime(expires.getTime() + 2000);//2000
         document.cookie = `logined_data = ${encodeURIComponent(JSON.stringify(user_data))};path=/; expires=${expires.toUTCString()}`;
 
         window.location.href = this.order_arg;
