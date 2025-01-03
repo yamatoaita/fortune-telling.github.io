@@ -1,6 +1,28 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { getDatabase, ref, push,  get, set, onChildAdded, remove, onChildRemoved } 
+from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+
 
 class DialogueSystem{
     constructor(orderbox_logined,orderbox_unlogined,speech,btn1,btn2,entry){
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBw7FXEybaL4k61OTcHurPDwYpDkBxwZvo",
+            authDomain: "uranai-fc262.firebaseapp.com",
+            databaseURL: "https://uranai-fc262-default-rtdb.firebaseio.com",
+            projectId: "uranai-fc262",
+            storageBucket: "uranai-fc262.firebasestorage.app",
+            messagingSenderId: "475399899303",
+            appId: "1:475399899303:web:f95e4c527670ce9daf7382",
+            databaseURL: "https://uranai-fc262-default-rtdb.firebaseio.com/" 
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        this.db = getDatabase(app);
+        this.cookie_dbRef =  ref(this.db, `data/cookie`);
+
+
         this.dialogue_set =[]; //会話内容　リスト型
         this.speech = speech; //会話を表示させるオブジェクト
         this.dialogue_index = 0; //dialogue_set（会話内容リスト）のindex番号
@@ -265,47 +287,63 @@ class DialogueSystem{
             console.log(`============================It is %c<<IS_LOGINED>>`,`color:blue`);
         };
         
-  
+        get(this.cookie_dbRef).then((snapshot) => {//page2, letter.indexの時のデータ取り出し
+           
+            if (snapshot.exists()) {//パスワードが登録されていた場合
+                var data_list = snapshot.val();//データを格納[DATE,"passward"]
+                data_list = JSON.parse(data_list);
 
-        var value = `; ${document.cookie}`;
-        var parts = value.split(`; logined_data=`);
-        try{
-            var data_list = JSON.parse(decodeURIComponent(parts.pop().split(";").shift()));
-        }catch(error){
-            var data_list = [];
-        }
-        /*
-        console.log(`%c==============================here is cookie data `,`color:purple`);
-        console.table(data_list);
-        console.log(`%c＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝That's all `,`color:purple`);
-        */
+                let cookie_date = new Date(data_list[0]); // cookie_dateを格納
+                let current_date = new Date(); // 現在の時刻を取得
 
-        if(data_list.length> 1){
+                // cookie_dateから現在時刻までの経過時間をミリ秒で取得
+                let elapsed_time = current_date - cookie_date; 
+                console.log(`elapsed time is ${elapsed_time}. current date[${current_date}]- cookie_date[${cookie_date}]`);
+                // 3秒（3000ミリ秒）経過したか判定
+                if (elapsed_time >= 3000) {
+                    data_list = [];
+                    console.log("over 3 sec")
+                } else {
+                    data_list = data_listf[1];
+                    console.log(`get passward ${this.passward}`)
+                }
 
-            this.user_name =data_list[0]         // 0:ユーザー名
-            this.birth_day =data_list[1]         // 1:ユーザーの誕生日
-            this.booked_fortuneteller = data_list[2] // 2:予約した占い師
-            //ここでもうデータを取り出してしまう
-
-  
-            this.dialogue_set = this.orderbox_logined[0];
-            this.orders = this.orderbox_logined[1];
-
-            this.order_index = 0;
-            this.dialogue_index = 0;
-            this.do();
             
-            
-            
-        }else{
-            this.dialogue_set = this.orderbox_unlogined[0];
-            this.orders = this.orderbox_unlogined[1];
-            
+            } else {//パスワードが存在しなかった場合
+                data_list = [];
+                console.log("error: non available passward, in get_userdata");
+            }
 
-            this.order_index = 0;
-            this.dialogue_index = 0;
-            this.do();
-        }
+
+            if(data_list.length> 1){
+
+                this.user_name =data_list[0]         // 0:ユーザー名
+                this.birth_day =data_list[1]         // 1:ユーザーの誕生日
+                this.booked_fortuneteller = data_list[2] // 2:予約した占い師
+                //ここでもうデータを取り出してしまう
+    
+      
+                this.dialogue_set = this.orderbox_logined[0];
+                this.orders = this.orderbox_logined[1];
+    
+                this.order_index = 0;
+                this.dialogue_index = 0;
+                this.do();
+                
+                
+                
+            }else{
+                this.dialogue_set = this.orderbox_unlogined[0];
+                this.orders = this.orderbox_unlogined[1];
+                
+    
+                this.order_index = 0;
+                this.dialogue_index = 0;
+                this.do();
+            }
+        });
+
+        
 
 
     }
@@ -580,7 +618,10 @@ class DialogueSystem{
 
         const expires = new Date();
         expires.setTime(expires.getTime() + 2000);//2000
-        document.cookie = `logined_data = ${encodeURIComponent(JSON.stringify(user_data))};path=/; expires=${expires.toUTCString()}`;
+
+        var cookie_list = [expires,user_data];
+        cookie_list = JSON.stringify(cookie_list);
+        set(this.cookie_dbRef,cookie_list);//firebaseにデータを記録
 
         window.location.href = this.order_arg;
         this.order_changed_flg = 1;
