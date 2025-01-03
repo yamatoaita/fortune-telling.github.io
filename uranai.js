@@ -304,7 +304,7 @@ class DialogueSystem{
                     data_list = [];
                     console.log("over 3 sec")
                 } else {
-                    data_list = data_listf[1];
+                    data_list = data_list[1];
                     console.log(`get passward ${this.passward}`)
                 }
 
@@ -692,27 +692,14 @@ class DialogueSystem{
   
         var user_data = [
             this.user_name,             // 0:ユーザー名
-            this.birth_day,             // 1:ユーザーの誕生日
-            this.booked_fortuneteller   //  2:予約した占い師名
+            this.birth_day             // 1:ユーザーの誕生日
         ]
 
-        //保存するdictionaryの作成・取得
-        if(window.localStorage.data == ""){
-            var user_data_pack = new Map();
-        }else{
-            var raw_data = window.localStorage.getItem("data");
-            var user_data_pack = new Map(JSON.parse(raw_data));
-            //二回目以降は、localstorageにあるdictionaryにデータを追加していきます。
-            //じゃないと、毎回dictionaryごと上書きしてしまうため。
-            //複数人のデータが保存されません。
-        }
-   
-        user_data_pack.set(this.id,user_data);
-        var packed_object_map = JSON.stringify(Array.from(user_data_pack.entries()));
-        //localStorageでは生のobject mapを保存できません。
-        //そのため、JSON形式に変換して保存します。
-        window.localStorage.data = packed_object_map;
-        //データをストレージに保存
+        var JSON_datapack =  JSON.stringify(user_data);
+
+        //const newPostRef = push(this.dbRef);//ユニークキーを生成する場合
+        var dbRef =  ref(this.db, `data/${this.id}`);
+        set(dbRef,JSON_datapack);//Google Firebaseにデータを保存（key, data）
 
         this.btn1.textContent =  "次へ";
         this.btn2.textContent =  "ー";
@@ -731,6 +718,27 @@ class DialogueSystem{
 
         this.dialogue_changed_flg = 1;
         this.order_changed_flg = 1;
+
+        /*【以前のでーた】
+        //保存するdictionaryの作成・取得
+        if(window.localStorage.data == ""){
+            var user_data_pack = new Map();
+        }else{
+            var raw_data = window.localStorage.getItem("data");
+            var user_data_pack = new Map(JSON.parse(raw_data));
+            //二回目以降は、localstorageにあるdictionaryにデータを追加していきます。
+            //じゃないと、毎回dictionaryごと上書きしてしまうため。
+            //複数人のデータが保存されません。
+        }
+   
+        user_data_pack.set(this.id,user_data);
+        var packed_object_map = JSON.stringify(Array.from(user_data_pack.entries()));
+        //localStorageでは生のobject mapを保存できません。
+        //そのため、JSON形式に変換して保存します。
+        window.localStorage.data = packed_object_map;
+        //データをストレージに保存
+
+        */
     }
 
     get_userdata(){// ≪データ記入場≫他に取り出すものが増えたらここに忘れず記入
@@ -738,25 +746,40 @@ class DialogueSystem{
             console.log(`============================It is %c<<GET_USERDATA>>`,`color:blue`);
         };
         console.log(`$$$$$in get user data$$$$$$${this.user_name}`)
-        this.id = `${this.user_name}${this.birth_day}`;        
-        var raw_data = window.localStorage.getItem("data");
-        this.user_savedata = new Map(JSON.parse(raw_data));
-  
-        //JSON形式のデータを取り出します
-        //その後、JSON形式を解凍します。
-        //そして、 data.get(id)でユーザーデータ（LIST型）を取り出せます。
-        console.table(this.user_savedata);
-        console.log(`=======================${this.id}`)
-        try{
-            this.user_name = this.user_savedata.get(this.id)[0]         // 0:ユーザー名
-            this.birth_day = this.user_savedata.get(this.id)[1]         // 1:ユーザーの誕生日
-            this.booked_fortuneteller = this.user_savedata.get(this.id)[2] // 2:予約した占い師
-            //ここでもうデータを取り出してしまう
-        }catch(error){
-            this.user_name = "";
-            this.birth_day = "";
-            this.booked_fortuneteller = "";
-        }
+
+
+        this.id = `${this.user_name}${this.birth_day}`;
+        var dbRef =  ref(this.db, `data/${this.id}`);
+        get(dbRef).then((snapshot) => {//page2, letter.indexの時のデータ取り出し
+           
+            if (snapshot.exists()) {//パスワードが登録されていた場合
+               
+                var raw_data = snapshot.val();//データを格納[DATE,"passward"]
+                this.user_savedata = JSON.parse(raw_data);
+        
+                //JSON形式のデータを取り出します
+                //その後、JSON形式を解凍します。
+                //そして、 data.get(id)でユーザーデータ（LIST型）を取り出せます。
+                console.table(this.user_savedata);
+                console.log(`=======================${this.id}`)
+                try{
+                    this.user_name = this.user_savedata[0]         // 0:ユーザー名
+                    this.birth_day = this.user_savedata[1]         // 1:ユーザーの誕生日
+                    
+                    //ここでもうデータを取り出してしまう
+                }catch(error){
+                    this.user_name = "";
+                    this.birth_day = "";
+
+                }
+            
+            } else {//パスワードが存在しなかった場合
+                this.user_savedata = [];
+                console.log("error: non available passward, in get_userdata");
+            }
+        });
+
+   
     }
     
     hub_judge(){//各種judge関数において、判定False時の処理
@@ -784,29 +807,68 @@ class DialogueSystem{
             console.log(`============================It is %c<<JUDGE_ID>>`,`color:blue`);
         };
 
-        this.get_userdata();//入力された名前と生年月日でidを製作。いったん取り出してみる
-
-        this.btn1.textContent = "次へ";
-        this.btn2.textContent = "ー";
-   
-        
-        
-        try{
-            var id_data = this.user_savedata.get(this.id)[0];
-        }
-        catch(error){
-            var id_data = "nothing";
+        //this.get_userdata();//入力された名前と生年月日でidを製作。いったん取り出してみる
+        if(this.innerfunc_consoleflg){
+            console.log(`============================It is %c<<GET_USERDATA>>`,`color:blue`);
         };
+        console.log(`$$$$$in get user data$$$$$$${this.user_name}`)
 
 
-        if(id_data == "nothing" || id_data === undefined){//idが登録されてなかったら、undefinedになる。
-          this.hub_judge();
-        }else{//占い師の名前が確認された場合
+        this.id = `${this.user_name}${this.birth_day}`;
+        var dbRef =  ref(this.db, `data/${this.id}`);
+        get(dbRef).then((snapshot) => {//page2, letter.indexの時のデータ取り出し
+           
+            if (snapshot.exists()) {//パスワードが登録されていた場合
+               
+                var raw_data = snapshot.val();//データを格納[DATE,"passward"]
+                this.user_savedata = JSON.parse(raw_data);
+        
+                //JSON形式のデータを取り出します
+                //その後、JSON形式を解凍します。
+                //そして、 data.get(id)でユーザーデータ（LIST型）を取り出せます。
+                console.table(this.user_savedata);
+                console.log(`=======================${this.id}`)
+                try{
+                    this.user_name = this.user_savedata[0]         // 0:ユーザー名
+                    this.birth_day = this.user_savedata[1]         // 1:ユーザーの誕生日
+                    
+                    //ここでもうデータを取り出してしまう
+                }catch(error){
+                    this.user_name = "";
+                    this.birth_day = "";
 
-            this.next_dialogue();
-            //next_dialogueでorder_indexとorder_changed_flg変更するから
-            //ここでは記述しないこと。
-        }
+                }
+            
+            } else {//パスワードが存在しなかった場合
+                this.user_savedata = [];
+                console.log("error: non available passward, in get_userdata");
+            }
+            //===================================================================================
+            this.btn1.textContent = "次へ";
+            this.btn2.textContent = "ー";
+       
+            
+            
+            try{
+                var id_data = this.user_savedata[0]
+            }
+            catch(error){
+                var id_data = "nothing";
+            };
+    
+    
+            if(id_data == "nothing" || id_data === undefined){//idが登録されてなかったら、undefinedになる。
+              this.hub_judge();
+            }else{//占い師の名前が確認された場合
+    
+                this.next_dialogue();
+                //next_dialogueでorder_indexとorder_changed_flg変更するから
+                //ここでは記述しないこと。
+            }
+        });
+
+
+        
     }
 
     back_to_home(){//➡this.linkへ
@@ -1284,8 +1346,8 @@ class SiteSystem{
                     ["next"],
                     ["next"],
                     ["check_<change_d&s_index>",7,4 ,"<br>説明は以上になります。<br>もう一度聞く場合「いいえ」ボタンを<br>押してください。"],
-                    ["change_d&s_pack",this.uranai_box,"占う", this.book_box,"予約","<br>#command_user_name#様。<br>改めていらっしゃいませ。今日は何用で？"]
-                ];            
+                    ["change_d&s_pack",this.left_uranai_box,"地の間", this.right_uranai_box,"天の間","<br>#command_user_name#様。<br>改めていらっしゃいませ。<br>どちらのお部屋で占いましょうか"]
+                  ];            
             }   
             this.orderbox_pattern_register = [this.dialogues_pattern_register, this.orders_pattern_register,this.orders_list4log_pattern_register]; 
         }
