@@ -784,7 +784,7 @@ class DialogueSystem{
     
     hub_judge(){//各種judge関数において、判定False時の処理
         if(this.innerfunc_consoleflg){
-            console.log(`============================It is %c<<HUB_JUDEGE>>`,`color:blue`);
+            console.log(`============================It is %c<<HUB_JUDEGE>> `,`color:blue`);
         };
 
         //this.order_arg = 判定がfalse時に表示する文字
@@ -793,6 +793,7 @@ class DialogueSystem{
         this.speech.innerHTML = this.order_arg;
         this.dialogue_index  = third_order_arg;
         this.order_index = second_order_arg;
+
         this.dialogue_changed_flg = 1;//会話の変化を記録
         
         this.btn1.addEventListener("click", ()=>{
@@ -815,6 +816,9 @@ class DialogueSystem{
 
 
         this.id = `${this.user_name}${this.birth_day}`;
+        if(this.id == ""){
+            this.id = "empty";
+        }
         var dbRef =  ref(this.db, `data/${this.id}`);
         get(dbRef).then((snapshot) => {//page2, letter.indexの時のデータ取り出し
            
@@ -960,7 +964,7 @@ class DialogueSystem{
         };
 
         this.btn1.textContent = "次へ";
-        this.btn2.textContent = "";
+        this.btn2.textContent = "ー";
 
 
         var user_input = this.entry.value;
@@ -1157,15 +1161,11 @@ class SiteSystem{
         nityoume_no_titi.png
         ro_tyou.png
         */
-        var max_number = 3;
-        var min_number = 0;
-        var random_number = Math.floor(Math.random() * (max_number - min_number + 1)) + min_number;
-        var list_receptionist = ["yuurei_miruko.png","yatugatake_no_hahatati.png","nityoume_no_titi.png","ro_tyou.png"];
-       
+      
         const receptionist_img = document.createElement("img");
         
-        receptionist_img.src = list_receptionist[random_number];
-        receptionist_img.alt  = "幽霊視子　受付"
+        receptionist_img.src = "sinngann_no_masa.png";
+        receptionist_img.alt  = "心眼のマサ　受付"
         
         receptionist_img.id = "pic_receptionist";
         receptionist_img.className  ="receptionist";
@@ -1293,12 +1293,12 @@ class SiteSystem{
         //==============================================================================================
         {//【右の間　占い】box
             this.dialogues_right_uranai = [//【右の間　占い】会話パック
-                "<br>では、右の間へご案内します。<br>足元暗いのでご注意ください"
+                "<br>では、天の間へご案内します。<br>2階への階段をお進みください"
             ];
             this.orders_right_uranai = [//【右の間　占い】命令パック
                 ["load"],
                 ["select_uranai_r","<br>占い師を選択してください。"],
-                ["judge_book",,"<br>入力された占い師は名簿にありません。<br>もう一度入力してください",1,1],
+                ["judge_book","<br>入力された占い師は名簿にありません。<br>もう一度入力してください",1,1],
                 ["call_booked_fortune_teller"]
             ];
             this.right_uranai_box = [this.dialogues_right_uranai,this.orders_right_uranai];
@@ -1306,12 +1306,12 @@ class SiteSystem{
          //==============================================================================================
         {//【左の間　占い】box
             this.dialogues_left_uranai = [//【左の間　占い】会話パック
-                "<br>では、左の間へご案内します。<br>階段に注意ください"
+                "<br>では、地の間へご案内します。<br>足元暗いのでご注意ください"
             ];
             this.orders_left_uranai = [//【右の間　占い】命令パック
                 ["load"],
                 ["select_uranai_l","<br>占い師を選択してください。"],
-                ["judge_book",,"<br>入力された占い師は名簿にありません。<br>もう一度入力してください",1,1],
+                ["judge_book","<br>入力された占い師は名簿にありません。<br>もう一度入力してください",1,1],
                 ["call_booked_fortune_teller"]
             ];
             this.left_uranai_box = [this.dialogues_left_uranai,this.orders_left_uranai];
