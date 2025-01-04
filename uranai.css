@@ -259,6 +259,7 @@ body{
     height: 400px;
     z-index: 4;
     overflow-y: auto;   /* 垂直スクロールを有効にする */
+    -webkit-overflow-scrolling: touch; /* iOSデバイスでスムーズスクロールを有効化 */
     border: 3px ridge #ccc; /* 視覚的に枠をつける */
 
     color: white;
