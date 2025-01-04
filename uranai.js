@@ -699,11 +699,11 @@ class DialogueSystem{
             try{
                 // 後からaltInputを削除する
                 if (this.fp.altInput) {
-                    fp.altInput.remove(); // altInputの削除
-                    fp.altInput = null; // 参照をクリア
+                    this.fp.altInput.remove(); // altInputの削除
+                    this.fp.altInput = null; // 参照をクリア
                 }
             }catch(error){
-                
+
             }
             //一つ会話を進ませる
             this.order_index += 1;
