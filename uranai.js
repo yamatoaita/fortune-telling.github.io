@@ -662,6 +662,7 @@ class DialogueSystem{
         };
 
         try {
+
             this.entry.setAttribute("type", "date");
             if (this.entry.type !== "date") {
               throw new Error("date type not supported");
@@ -669,7 +670,7 @@ class DialogueSystem{
           } catch (error) {
             // Safariなど`type="date"`が無効の場合にFlatpickrを適用
             // Flatpickrを初期化
-            const fp = flatpickr(this.entry, {
+            this.fp = flatpickr(this.entry, {
                 dateFormat: "Y-m-d",
                 defaultDate: new Date(),
                 allowInput: true,
@@ -677,11 +678,7 @@ class DialogueSystem{
                 altFormat: "Y-n-j",
             });
             
-            // 後からaltInputを削除する
-            if (fp.altInput) {
-                fp.altInput.remove(); // altInputの削除
-                fp.altInput = null; // 参照をクリア
-            }
+            
           }
 
 
@@ -698,7 +695,16 @@ class DialogueSystem{
             this.entry.value = ""
             this.entry.setAttribute("type","text")
             //entryに入力されたデータを初期化。お掃除です。
-
+            
+            try{
+                // 後からaltInputを削除する
+                if (this.fp.altInput) {
+                    fp.altInput.remove(); // altInputの削除
+                    fp.altInput = null; // 参照をクリア
+                }
+            }catch(error){
+                
+            }
             //一つ会話を進ませる
             this.order_index += 1;
             this.do();
