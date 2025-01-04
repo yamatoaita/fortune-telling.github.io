@@ -1169,7 +1169,7 @@ class DialogueSystem{
             "免疫が下がる一日になるでしょう。<br>そんな今日は手洗いうがいを忘れずに。そして、ハチミツ＋山盛り生姜＋ビタミンCが豊富な飲食物を混ぜて飲むと明日にかけて健康になるでしょう。"
         ]
 
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>そんなあなたの健康度を上げるラッキーアイテムは${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}です。`
+        var result = `${list_result[this.uranai_fix_ind *2 % list_result.length]}<br><br>そんなあなたの健康度を上げるラッキーアイテムは${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}です。`
         
         this.modal.innerHTML = result;
     }
@@ -1201,7 +1201,7 @@ class DialogueSystem{
             "運気が下がり気味の一日となるでしょう。今日は大きな買い物は失敗しやすいです。まがい物を買ってしまうかもしれません。"
         ]
 
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>そんなあなたの金運を上げるラッキーアイテムは${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}です。`
+        var result = `${list_result[this.uranai_fix_ind * 3 % list_result.length]}<br><br>そんなあなたの金運を上げるラッキーアイテムは${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}です。`
         
         this.modal.innerHTML = result;
     }
@@ -1245,7 +1245,7 @@ class DialogueSystem{
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>そんなあなたの為に運気をあげる古語を送りましょう。<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝<br><br>良い一日となりますように。`
+        var result = `${list_result[this.uranai_fix_ind * 4 % list_result.length]}<br><br>そんなあなたの為に運気をあげる古語を送りましょう。<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝<br><br>良い一日となりますように。`
         
         this.modal.innerHTML = result;
     }
@@ -1273,7 +1273,7 @@ class DialogueSystem{
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>あんたの為に運気をあげる話を送る。<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝`
+        var result = `${list_result[this.uranai_fix_ind  * 5 % list_result.length]}<br><br>あんたの為に運気をあげる話を送る。<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝`
         
         this.modal.innerHTML = result;
     }
@@ -1344,9 +1344,9 @@ class DialogueSystem{
           ];
 
         //------------------
-        this.uranai_fix_ind = Math.floor(Math.random() * 1001);
+        //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>学業運を上げるラッキーアイテムは<br>${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}ぞ。`
+        var result = `${list_result[this.uranai_fix_ind * 7 % list_result.length]}<br><br>学業運を上げるラッキーアイテムは<br>${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}ぞ。`
         
         this.modal.innerHTML = result;
     };
@@ -1362,7 +1362,7 @@ class DialogueSystem{
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}`
+        var result = `${list_result[this.uranai_fix_ind * 8 % list_result.length]}`
         
         this.modal.innerHTML = result;
     };
@@ -1412,7 +1412,7 @@ class DialogueSystem{
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
 
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>今日のラッキー生産地は【${product_place[this.uranai_fix_ind % product_place.length]}産】ブロッコリー！。<br><br>ラッキー品種は【${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}】だよ！。`
+        var result = `${list_result[this.uranai_fix_ind * 9 % list_result.length]}<br><br>今日のラッキー生産地は【${product_place[this.uranai_fix_ind % product_place.length]}産】ブロッコリー！。<br><br>ラッキー品種は【${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}】だよ！。`
         
         this.modal.innerHTML = result;
     };
@@ -1461,7 +1461,7 @@ class DialogueSystem{
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
 
-        var result = `<br><br>卯年である2035年の${formattedDate}<br><br>${list_result[this.uranai_fix_ind % list_result.length]}`
+        var result = `<br><br>卯年である2035年の${formattedDate}<br><br>${list_result[this.uranai_fix_ind  * 11 % list_result.length]}`
         
         this.modal.innerHTML = result;
     };
@@ -1682,7 +1682,7 @@ class SiteSystem{
                                     "<br>まずは、お名前と生年月日を教えてくれますか？<br>(後から変更不可)",     //1
                                     "<br>ありがとうございます。<br>では、占いの館について説明いたします。",          //3
                                     "<br>占いの館では様々な占い師から、<br>色んな占いを受けることができます。",     //4
-                                    "<br>予約の説明です。<br>明日に行う占い師を予約できます。",                    //5
+                                    "<br>",                    //5
                                     "<br>予約しないと会えない人気占い師も<br>当店に在籍しています。",              //6
                                     "<br>占いの説明です。<br>占うボタンを押すと、占いを受けられます。",            //7
                                     "<br>予約がなくても占えます。<br>予約している場合は、予約した占い師が占います", //8
@@ -1881,7 +1881,7 @@ class SiteSystem{
             this.dialogues_usatyann = [
                 "<br>私　うさちゃん。去年の干支。<br>次の兎年、2035年の今日何が起こるか占うね",
                 "<br>(うさちゃんはしっぽをフリフリしている。）",
-                "<br>１１年後、楽しみにしててねー"
+                "<br>１０年後、楽しみにしててねー"
             ];
 
             this.orders_usatyann = [
