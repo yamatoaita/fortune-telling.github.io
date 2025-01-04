@@ -249,7 +249,7 @@ body{
 }
 
 .modal{
-    display: none;
+    display: flex;
 
     background-color: rgba(54, 54, 54, 0.934);
     position: fixed;
