@@ -13,13 +13,14 @@ body{
     width: 10px;
     height: 700px;
     margin: auto;
-    
+    overflow-y: hidden;
     
 }
 @media (max-width:480px){
     body{
         width: 160px;
         height: auto;
+        
     }
 }
 
@@ -252,16 +253,25 @@ body{
 
     background-color: rgba(54, 54, 54, 0.934);
     position: fixed;
-    top: 100px;
-    left: 70px;
+    top: 80px;
+    left: 420px;
     width: 530px;
-    height: 500px;
+    height: 400px;
     z-index: 4;
     overflow-y: auto;   /* 垂直スクロールを有効にする */
     border: 3px ridge #ccc; /* 視覚的に枠をつける */
 
     color: white;
     font-size: 30px;
+}
+@media (max-width:480px) {
+    .modal{
+        height: 400px;
+        top: 80px;
+        width: 330px;
+        left: 25px;
+
+    }
 }
 
 /*以上　予約に関するCSS*/
