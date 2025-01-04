@@ -668,13 +668,20 @@ class DialogueSystem{
             }
           } catch (error) {
             // Safariなど`type="date"`が無効の場合にFlatpickrを適用
-            flatpickr(this.entry, {
-              dateFormat: "Y-m-d",
-              defaultDate: new Date(),
-              allowInput: true, // これを追加
-              altInput: true,          // ユーザーに見える形式を別途指定
-              altFormat: "Y-n-j",     // 表示形式
+            // Flatpickrを初期化
+            const fp = flatpickr(this.entry, {
+                dateFormat: "Y-m-d",
+                defaultDate: new Date(),
+                allowInput: true,
+                altInput: true,
+                altFormat: "Y-n-j",
             });
+            
+            // 後からaltInputを削除する
+            if (fp.altInput) {
+                fp.altInput.remove(); // altInputの削除
+                fp.altInput = null; // 参照をクリア
+            }
           }
 
 
