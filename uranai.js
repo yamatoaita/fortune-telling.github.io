@@ -670,7 +670,9 @@ class DialogueSystem{
             // Safariなど`type="date"`が無効の場合にFlatpickrを適用
             flatpickr(this.entry, {
               dateFormat: "Y-m-d",
-              defaultDate: new Date(),
+              allowInput: true, // これを追加
+              altInput: true,          // ユーザーに見える形式を別途指定
+              altFormat: "F j, Y",     // 表示形式
             });
           }
 
