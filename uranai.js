@@ -52,7 +52,7 @@ class DialogueSystem{
         this.is_logined();
 
         //this.modal = document.getElementById("modal");
-        //this.uranai_usatyann();
+        //this.uranai_study();
     }
 
     do(){ 
@@ -1245,7 +1245,7 @@ class DialogueSystem{
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>そんなあなたの為に運気をあげる古語を送りましょう。<br>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝<br><br>良い一日となりますように。`
+        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>そんなあなたの為に運気をあげる古語を送りましょう。<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝<br><br>良い一日となりますように。`
         
         this.modal.innerHTML = result;
     }
@@ -1273,31 +1273,96 @@ class DialogueSystem{
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>あんたの為に運気をあげる話を送る。<br>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝`
+        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>あんたの為に運気をあげる話を送る。<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝`
         
         this.modal.innerHTML = result;
     }
 
     uranai_study(){
         var list_luckyitems = [
+            "ノート",
+            "ボールペン",
+            "高品質な鉛筆",
+            "付箋",
+            "カラーペン",
+            "定規",
+            "チェックリスト",
+            "学習計画表",
+            "参考書",
+            "マーカー",
+            "ワイヤレスヘッドフォン",
+            "静かな場所",
+            "目覚まし時計",
+            "快適な椅子",
+            "フォルダー",
+            "細かいメモ帳",
+            "充電器",
+            "ホワイトボード",
+            "クリアファイル",
+            "タイマー",
+            "アプリ",
+            "パソコン",
+            "スマートフォン",
+            "眼鏡",
+            "ブックライト",
+            "ホットドリンク",
+            "水筒",
+            "快適なデスク環境",
+            "暖かいスリッパ",
+            "明るいデスクランプ",
+            "集中を助ける音楽",
+            "食事",
+            "勉強仲間",
+            "モチベーションを高めるポスター",
+            "カレンダー",
+            "睡眠用具",
+            "チョコレート",
+            "ストレッチマット",
+            "ヨガボール",
+            "眼精疲労用アイマスク",
+            "お香",
+            "スマートウォッチ",
+            "健康的な昼食",
+            "季節の花",
+            "デスク周りの小さな観葉植物",
+            "トラベルポーチ",
+            "休憩用の音楽プレイリスト",
+            "リラックスできる温泉バスソルト",
+            "アロマキャンドル",
+            "カフェインを含まない飲み物"
         ];
         var list_result = [
+            "ふむ、今日の学業運は極めて良好だ。お前の知識吸収力が非常に高く、難解な課題に対しても適切なアプローチができるだろう。だが、油断してはいけない。何事も慎重に、過信せず進め。成功を得るためには、努力を続けることが肝要だ。考えを深め、無駄な一歩を踏み外すな。",
             
-        ]
+            "今日は少しばかり良い運気だろう。新しい知識を得るには好機だが、集中力を欠けば無駄に時間を浪費することになるぞ。どんな状況でも、冷静さと注意力を保ちなさい。前向きに学べば、大きな成長を期待できるかもしれん。しかし、焦りは禁物だ。",
+            
+            "学業運はごく普通だ。何も特別な出来事はないだろうが、普段通り進めば問題はない。ただし、安定していれば安心してよいというわけではない。着実に物事を進め、基礎を固めることが、将来の成功を支えるのだ。慢心せず、日々積み重ねることが肝心だ。",
+            
+            "ふむ、今日は少々運が悪いようだ。集中力が途切れ、思うように進まないだろう。だが、これも一つの経験だ。無理に進めることは無駄だし、時には立ち止まることも大切だ。心を落ち着けて休むことが、最終的にはプラスになるだろう。焦ってはいけない。",
+            
+            "最悪だ。学業運は完全に低迷している。今日のような日は、無理をしても成果は上がらない。だが、覚えておけ、どんな苦境にも意味がある。失敗から学び、次回に備えることが肝要だ。慌てず、今日はゆっくりと振り返ることが賢明だろう。"
+          ];
 
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>学業運を上げるラッキーアイテムは${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}ぞ。`
+        //------------------
+        this.uranai_fix_ind = Math.floor(Math.random() * 1001);
+        //-------------------
+        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>学業運を上げるラッキーアイテムは<br>${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}ぞ。`
         
         this.modal.innerHTML = result;
     };
 
     uranai_love(){
-        var list_luckyitems = [
-        ];
-        var list_result = [
-            
-        ]
-
-        var result = `${list_result[this.uranai_fix_ind % list_result.length]}<br><br>そんな君の恋愛運を上げるラッキーアイテムは${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}です。`
+        var list_result =  [
+            "今日は、何もかも思い通りになる、そんな素敵な日よ。調子が良ければ、好きな人と偶然会ったり、思いがけないサプライズに出会ったり。今日の流れは、まるで私がそっと導いているみたい。<br><br>ラッキーアイテムは太陽の光",
+            "今日の運命、もしかしたらあなたは運命の相手と出会うかもしれないわよ。だけど、気をつけて。あなたが誰と出会うかなんて、誰にも分からないわ。言葉遣いにだけは気をつけてね。<br><br>ラッキーアイテムは生姜と蜂蜜",
+            "ちょっと前を向いて歩いてみなさい、スマホを見すぎないようにね。ひょっとしたら、初恋の相手とすれ違ってるかもしれないわ。運命があなたをそっと導いているかもしれない。<br><br>ラッキーアイテムは梅干し",
+            "今日は何もせず、穏やかに過ごす方が良い日よ。焦って動くと、良くない結果を招くかもしれない。だから今日は、自分に優しく、ゆっくり休んで。<br><br>ラッキーアイテムはハンドクリーム",
+            "好きな人に会うチャンスがある日よ。気分を新たにして、素敵な格好で出かけてみなさい。心の準備ができたなら、すぐにでも会えるはず。あなたのラッキーアイテムは、いい匂いのもの。香りで魅力を引き出して。<br><br>ラッキーアイテムはいい匂いのもの"
+          ];
+        //------------------
+        //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
+        //-------------------
+        var result = `${list_result[this.uranai_fix_ind % list_result.length]}`
         
         this.modal.innerHTML = result;
     };

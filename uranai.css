@@ -4,7 +4,7 @@
 /* .class名、 #id名*/
 
 :root{
-    --plus_px: 380px;/*スマホ用のサイズを変更する変数*/
+    --plus_px: 390px;/*スマホ用のサイズを変更する変数*/
 }
 
 body{
@@ -267,7 +267,7 @@ body{
 }
 @media (max-width:480px) {
     .modal{
-        height: 380px;
+        height: 400px;
         top: 80px;
         width: 330px;
         left: 25px;
