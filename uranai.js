@@ -673,7 +673,7 @@ class DialogueSystem{
               defaultDate: new Date(),
               allowInput: true, // これを追加
               altInput: true,          // ユーザーに見える形式を別途指定
-              altFormat: "F j, Y",     // 表示形式
+              altFormat: "Y-n-j",     // 表示形式
             });
           }
 
