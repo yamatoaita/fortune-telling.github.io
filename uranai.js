@@ -661,7 +661,21 @@ class DialogueSystem{
             console.log(`============================It is %c<<INPUT_BIRTH_DAY>>`,`color:blue`);
         };
 
-        this.entry.setAttribute("type", "date");
+        try {
+            this.entry.setAttribute("type", "date");
+            if (this.entry.type !== "date") {
+              throw new Error("date type not supported");
+            }
+          } catch (error) {
+            // Safariなど`type="date"`が無効の場合にFlatpickrを適用
+            flatpickr(this.entry, {
+              dateFormat: "Y-m-d",
+              defaultDate: new Date(),
+            });
+          }
+
+
+
         this.entry.placeholder = "";
         this.btn1.textContent =  "確定";
         //order_argは、promptに表示される説明文
