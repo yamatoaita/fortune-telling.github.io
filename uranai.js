@@ -876,7 +876,7 @@ class DialogueSystem{
     }
 
     back_to_home(){//➡this.linkへ
-        this.order_arg = "uranai.html";
+        this.order_arg = "index.html";
         this.link();
     }
 
@@ -1398,7 +1398,7 @@ class SiteSystem{
                 ["next"],
                 ["uranai","apep"],
                 ["next"],
-                ["link","uranai.html"]
+                ["link","index.html"]
 
             ];
 
@@ -1417,7 +1417,7 @@ class SiteSystem{
                 ["next"],
                 ["uranai","basilisk"],
                 ["next"],
-                ["link","uranai.html"]
+                ["link","index.html"]
             ];
 
             this.orderbox_relationship = [this.dialogues_relationship,this.orders_relationship];
@@ -1436,7 +1436,7 @@ class SiteSystem{
                 ["next"],
                 ["uranai","burokkori"],
                 ["next"],
-                ["link","uranai.html"]
+                ["link","index.html"]
             ];
 
             this.orderbox_burokkori = [this.dialogues_burokkori,this.orders_burokkori];
@@ -1455,7 +1455,7 @@ class SiteSystem{
                 ["next"],
                 ["uranai","lamia"],
                 ["next"],
-                ["link","uranai.html"]
+                ["link","index.html"]
 
             ];
 
@@ -1474,7 +1474,7 @@ class SiteSystem{
                 ["next"],
                 ["uranai","hydra.jpg"],
                 ["next"],
-                ["link","uranai.html"]
+                ["link","index.html"]
 
             ];
 
@@ -1493,7 +1493,7 @@ class SiteSystem{
                 ["next"],
                 ["uranai","itzamna"],
                 ["next"],
-                ["link","uranai.html"]
+                ["link","index.html"]
 
             ];
 
@@ -1512,7 +1512,7 @@ class SiteSystem{
                 ["next"],
                 ["uranai","keiryu"],
                 ["next"],
-                ["link","uranai.html"]
+                ["link","index.html"]
 
             ];
 
@@ -1531,7 +1531,7 @@ class SiteSystem{
                 ["next"],
                 ["uranai","usatyann"],
                 ["next"],
-                ["link","uranai.html"]
+                ["link","index.html"]
 
             ];
 
