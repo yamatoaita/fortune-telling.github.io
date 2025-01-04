@@ -267,7 +267,7 @@ body{
 }
 @media (max-width:480px) {
     .modal{
-        height: 400px;
+        height: 380px;
         top: 80px;
         width: 330px;
         left: 25px;
