@@ -34,7 +34,7 @@ body{
     .img_table{
         /*パソコン基準値；　width:300,  height:200*/
         width: 280px;
-        height: 150px;
+        height: 140px;
         position: relative;
         right: 50px;
         top: calc(260px - var(--plus_px));
@@ -76,7 +76,7 @@ body{
     top:    calc(260px - var(--plus_px));
     right:  70px;
     /*パソコン基準値　height:100px, width:500px*/
-    height: 70px;
+    height: 80px;
     width: 300px;
     font-size: 12px;
   }
