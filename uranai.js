@@ -370,7 +370,7 @@ class DialogueSystem{
         this.load_dialogue();
         //ログを読み込む
 
-        this.btn1.textContent = "Next";
+        this.btn1.textContent = "次へ";
         this.btn2.textContent = "ー";
         //ここが開始時のみの記述
         //ボタンの表示設定
@@ -446,7 +446,7 @@ class DialogueSystem{
        
         var next_order =this.orders[this.order_index][0];
         
-        this.btn1.textContent = "Next";
+        this.btn1.textContent = "次へ";
         this.btn2.textContent = "ー";
         //ボタンの表示設定
 
@@ -513,8 +513,8 @@ class DialogueSystem{
         this.entry.placeholder = ""
         this.entry.value = ""
         //直前のentryに表示されているものを初期化。checkでは使いません
-        this.btn1.textContent = "Yes"
-        this.btn2.textContent = "No"
+        this.btn1.textContent = "はい"
+        this.btn2.textContent = "いいえ"
         //ボタンの表示設定
         //btn等の設定
 
@@ -528,10 +528,10 @@ class DialogueSystem{
             if(this.input_force_retry == true){
                 this.input_force_retry = false;
                 if(this.order[0]=="check_<change_d&s_index>"&& now_functions_index == this.func_CHANGE_DS_INDEX_index){
-                    this.btn1.textContent = "Next"
+                    this.btn1.textContent = "次へ"
                     this.btn2.textContent = "ー"
-
-                    alert("Please enter something");
+                    
+                    alert("必ず何か入力してください");
                     //checkは２つのボタンにイベントをつける。
                     //一方のイベントで、命令が進んだら　押されなかったボタンを無効にする
                     //すなわち、this.order[0] == "next"になってたら以下のイベントを実行しない
@@ -546,18 +546,18 @@ class DialogueSystem{
                     //checkは２つのボタンにイベントをつける。
                     //一方のイベントで、命令が進んだら　押されなかったボタンを無効にする
                     //すなわち、this.order[0] == "next"になってたら以下のイベントを実行しない
-
+    
                     this.order_index += 1;
                     this.do();
                 }
                 //【はい】を押した場合のイベント
             }
-        
-        },{once:true});      
+            
+        },{once:true});     
 
         this.btn2.addEventListener("click", ()=> {
             if(this.order[0]=="check_<change_d&s_index>"&& now_functions_index == this.func_CHANGE_DS_INDEX_index){
-                this.btn1.textContent = "Next"
+                this.btn1.textContent = "次へ"
                 this.btn2.textContent = "ー"
 
                 //checkは２つのボタンにイベントをつける。
@@ -606,7 +606,7 @@ class DialogueSystem{
 
         //alert("changedspack")
         this.btn1.addEventListener("click", ()=>{
-            
+  
             if(this.order[0]=="change_d&s_pack"&& now_functions_index == this.func_CHANGE_DS_PACK_index){
             this.dialogue_index = 0;
             this.order_index = 0;
@@ -671,7 +671,7 @@ class DialogueSystem{
 
         this.entry.placeholder = this.order_arg;
         this.entry.setAttribute("type", "text");
-        this.btn1.textContent =  "Enter";
+        this.btn1.textContent =  "確定";
         this.btn2.textContent = "ー";
         //order_argは、promptに表示される説明文
         //entryやボタンの設定
@@ -723,7 +723,7 @@ class DialogueSystem{
 
 
         this.entry.placeholder = "";
-        this.btn1.textContent =  "Enter";
+        this.btn1.textContent =  "確定";
         //order_argは、promptに表示される説明文
         //entryやボタンの設定
 
@@ -773,7 +773,7 @@ class DialogueSystem{
         var dbRef =  ref(this.db, `data/${this.id}`);
         set(dbRef,JSON_datapack);//Google Firebaseにデータを保存（key, data）
 
-        this.btn1.textContent =  "Next";
+        this.btn1.textContent =  "次へ";
         this.btn2.textContent =  "ー";
 
         this.contents_of_speech = this.order_arg;
@@ -920,7 +920,7 @@ class DialogueSystem{
                 console.log("error: non available passward, in get_userdata");
             }
             //===================================================================================
-            this.btn1.textContent = "Next";
+            this.btn1.textContent = "次へ";
             this.btn2.textContent = "ー";
        
             
@@ -976,10 +976,10 @@ class DialogueSystem{
             this.pic4.src = "hydra.jpg";//仕事
 
             this.pic_lists = [
-                ["lamia.jpg" , "Lamia"],
-                ["burokkori.jpg" , "Broccoli"],
-                [ "apep.jpg", "Apep"],
-                [ "hydra.jpg" , "Hydra"]
+                ["lamia.jpg" , "ラミア―"],
+                ["burokkori.jpg" , "ブロッコリー"],
+                [ "apep.jpg", "アペプ"],
+                [ "hydra.jpg" , "ヒュドラ"]
             ]
 
         }else if(arg == "right"){
@@ -990,14 +990,14 @@ class DialogueSystem{
             this.pic4.src = "usatyann.jpg";//うさちゃん
         
             this.pic_lists = [
-                ["keiryu.jpg" ,"Caduceus"],
-                ["itzamna.jpg","Healthy"],
-                ["basilisk.jpg" , "Basilisk"],
-                [ "usatyann.jpg" ,"Bunny"]
+                ["keiryu.jpg" ,"ケーリュ"],
+                ["itzamna.jpg","すこやか"],
+                ["basilisk.jpg" , "バシリスク"],
+                [ "usatyann.jpg" ,"うさちゃん"]
             ]
         }
 
-        this.entry.placeholder = "Enter fortunteller's name";
+        this.entry.placeholder = "占い師の名前を入力";
 
 
         this.pic1.addEventListener("click", ()=>{
@@ -1015,13 +1015,13 @@ class DialogueSystem{
          });
          //画像をクリックするだけでentryに入力するようにする。
 
-         this.btn1.textContent = "Enter";
+         this.btn1.textContent = "決定";
          this.btn1.addEventListener("click",()=>{
             this.order_index += 1;
             this.do();           
          },{once:true});
  
-         this.btn2.textContent = "Back";
+         this.btn2.textContent = "戻る";
          this.btn2.addEventListener("click",()=>{
             if(this.in_select_uranai==true){
                 this.back_to_home();
@@ -1035,7 +1035,7 @@ class DialogueSystem{
             console.log(`============================It is %c<<JUDGE_BOOK>>`,`color:blue`);
         };
 
-        this.btn1.textContent = "Next";
+        this.btn1.textContent = "次へ";
         this.btn2.textContent = "ー";
 
 
@@ -1160,246 +1160,231 @@ class DialogueSystem{
     }
 
     uranai_health(){
-        var list_luckyitems = [
-            "Tomato",
-            "Miso soup",
-            "Ginger",
-            "Honey",
-            "Yuzu",
-            "Shredded cabbage",
-            "Throat lozenges",
-            "Mask",
-            "Hand soap",
-            "Wild herbs",
-            "Gluten-free",
-            "Sugar-free foods and drinks",
-            "Sunlight",
-            "Non-smartphone items",
-            "Roasted green tea",
-            "Green tea",
-            "Caffeine-free items",
-            "Pickled plums (Umeboshi)",
-            "Apple",
-            "Black vinegar",
-            "Pleasant fragrance",
-            "Water",
-            "Non-alcoholic items",
-            "Fish",
-            "Vegetables",
-            "Sweet potato"
+        var list_luckyitems = ["トマト",
+            "味噌汁",
+            "生姜",
+            "ハチミツ",
+            "柚子",
+            "キャベツの千切り",
+            "のど飴",
+            "マスク",
+            "ハンドソープ",
+            "野草",
+            "グルテンフリー",
+            "砂糖がない飲食物",
+            "太陽光",
+            "スマホ以外のもの",
+            "ほうじ茶",
+            "緑茶",
+            "カフェインが無いもの",
+            "梅干し",
+            "リンゴ",
+            "黒酢",
+            "心地よい香り",
+            "水",
+            "アルコール０％のもの",
+            "魚",
+            "野菜",
+            "サツマイモ"
         ];
         var list_result = [
-            "It might be a day where you are prone to injuries.<br>Pay attention to your surroundings, even in places you usually don’t worry about, to avoid tripping or bumping into things.",
-            "You’ll have a pleasant and energetic day.<br>Get some sunlight in the morning and engage in moderate exercise to maintain your health through tomorrow.",
-            "It’ll be an average day.<br>Take care of your health today to avoid feeling unwell tomorrow.",
-            "You’ll have a good day.<br>To further improve your health, try going to bed early and waking up early. This will help regulate your internal clock and balance your hormones.",
-            "It might be a day when your immunity is low.<br>Don’t forget to wash your hands and gargle. Drinking something with honey, plenty of ginger, and vitamin C-rich foods can boost your health for tomorrow."
-        ];
-        
+            "怪我をしやすい一日となるでしょう。<br>普段は気にしないような所でも周りに注意をして、転ばないように・ぶつからないようにしましょう。",
+            "快調な一日となるでしょう。<br>今日は朝日を浴びて、適度に運動をすれば　明日にかけても健康になるでしょう。",
+            "まあまあな一日となるでしょう。<br>明日にかけて体調が悪くならないよう　今日は健康に気を使いましょう。",
+            "調子が良い一日となるでしょう。<br>さらに健康になるために、早起き早寝をしてみましょう。すると、体内時計が正しくなりホルモンバランスが整います。",
+            "免疫が下がる一日になるでしょう。<br>そんな今日は手洗いうがいを忘れずに。そして、ハチミツ＋山盛り生姜＋ビタミンCが豊富な飲食物を混ぜて飲むと明日にかけて健康になるでしょう。"
+        ]
 
-        var result = `${list_result[this.uranai_fix_ind *2 % list_result.length]}<br><br>Your lucky item to boost your health today is ${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}.`
+        var result = `${list_result[this.uranai_fix_ind *2 % list_result.length]}<br><br>そんなあなたの健康度を上げるラッキーアイテムは${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}です。`
         
         this.modal.innerHTML = result;
     }
 
     uranai_gold(){
-        var list_luckyitems = [
-            "Half-price sticker",
-            "Jagged 10-yen coin",
-            "New 1,000-yen bill",
-            "5-yen coin",
-            "Square objects",
-            "Eco bag",
-            "Eco-friendly materials",
-            "Reusable bottle",
-            "Non-plastic",
-            "Homemade food",
-            "Cooking at home",
-            "Favorite local shop",
-            "Items with freebies",
-            "Vegetable seeds",
-            "Unused subscriptions",
-            "Self-discipline",
-            "Australian 1-dollar coin (gold)"
+        var list_luckyitems = ["半額シール",
+            "ギザギザ１０円",
+            "新千円札",
+            "５円玉",
+            "四角いもの",
+            "エコバック",
+            "エコ素材",
+            "マイボトル",
+            "非プラスチック",
+            "自家製食品",
+            "自炊",
+            "常連のお店",
+            "おまけ付き",
+            "野菜の種",
+            "最近使ってないサブスクリプション",
+            "自制の精神",
+            "オーストラリアの1ドル硬貨(金色)"
         ];
-        
         var list_result = [
-            "Your financial luck is likely to be poor today. It’s a good day to save money. Practice moderation and prepare for the days ahead. Even saving 1 dollar a day can add up to 10 dollars in 10 days.",
-            "It will be an excellent day. You might make a great purchase today.",
-            "Your fortune will be average. Just go about your usual daily routine.",
-            "It will be a good day. On a day like this, having the spirit to gift flowers to someone can improve your financial fortune in the future.",
-            "Your luck might be on the decline today. Be cautious with big purchases, as they are likely to go wrong. You might end up buying something fake."
-        ];
-        
+            "今日の金運は悪いでしょう。今日は貯金の日です。節制を心がけ、明日以降に備えましょう。１００円でも１０日積み重なれば１０００円となります。",
+            "とてもよい一日となるでしょう。何か良い買い物ができる日です。",
+            "まあまあな運勢でしょう。いつも通りの生活を送りましょう。",
+            "よい一日となるでしょう。こんな日には誰かに花をプレゼントする心持があれば今後も金運が上がっていきます",
+            "運気が下がり気味の一日となるでしょう。今日は大きな買い物は失敗しやすいです。まがい物を買ってしまうかもしれません。"
+        ]
 
-        var result = `${list_result[this.uranai_fix_ind * 3 % list_result.length]}<br><br>Today's lucky item for money is ${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}.`
+        var result = `${list_result[this.uranai_fix_ind * 3 % list_result.length]}<br><br>そんなあなたの金運を上げるラッキーアイテムは${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}です。`
         
         this.modal.innerHTML = result;
     }
 
     uranai_work(){
-        var list_story =[
-            "If you are lost, ask a firewood cutter or a grass cutter. <br>『詩経』 (The Book of Songs)",
-            "If you are disciplined, the country will not fall into chaos. <br>「詹何」 (Zhan He)",
-            "A wise ruler listens widely to the opinions of the people. A foolish ruler trusts only a biased few. <br>『貞観政要』 (The Essentials of Governance)",
-            "When arrogance begins, the country faces the crisis of survival. <br>『貞観政要』 (The Essentials of Governance)",
-            "The example of the Shang dynasty is not far off. The best models for caution are found nearby. By using history as a mirror, one can understand the rise and fall of things. <br>『貞観政要』 (The Essentials of Governance)",
-            "Those who grow trees must first strengthen the roots; those who direct water to far places must first deepen the source. <br>『貞観政要』 (The Essentials of Governance)",
-            "The people's complaints are not about the size of things, but about the ruler's morality. <br>『書経』 (The Book of Documents)",
-            "Emperor Wen of the Sui dynasty handled all matters alone. However, when he dealt with ten issues, five were unjust. Over many years, such a pattern would lead to the country's destruction. <br>『貞観政要』 (The Essentials of Governance)",
-            "When a sick person thinks they are well, they must take extra care. When the country is at peace, it is the time to be most cautious. <br>『貞観政要』 (The Essentials of Governance)",
-            "The people are like water; the ruler is like a boat. Water can carry the boat, but it can also overturn it. <br>『荀子』 (Xunzi)",
-            "Great things always start from small matters. <br>『貞観政要』 (The Essentials of Governance)",
-            "Once, Duke Wen of Jin went hunting and got lost in a distant marsh. He met a fisherman and said, 'I am your ruler. If you guide me, I will reward you.' Once he was rescued, Duke Wen ordered his attendant to write down the fisherman's name. But the fisherman replied, 'Why do you need to know my name? If the ruler governs the country with kindness, easing the people's burdens, then I will also benefit. If the ruler mismanages the country, treats other lords with disrespect, and goes against the people's wishes, even a fisherman like me will not be able to keep any reward.' The fisherman did not accept the reward. <br>『新序』 (The New Preface)",
-            "If the ruler is calm and at peace, the people will certainly be at ease. <br>『貞観政要』 (The Essentials of Governance)",
-            "A copper mirror can be used to straighten one's clothing. Using the past as a mirror, one can understand the rise and fall of nations. Using people as a mirror, one can see their own virtues and flaws clearly. <br>『貞観政要』 (The Essentials of Governance)",
-            "If a ruler wants to know their own mistakes, they must rely on the opinions of loyal ministers. But if a ruler thinks of themselves as wise, the ministers will no longer try to correct them. This is how Emperor Yang of the Sui dynasty perished. <br>『貞観政要』 (The Essentials of Governance)",
-            "If a blind person is not guided when in danger and is not helped up when they fall, there is no need for a companion. If a ruler does not help the country avoid destruction, and the ministers merely flatter the ruler, the country will be ruined. The country can only be at peace when ministers advise and admonish the ruler. <br>『貞観政要』 (The Essentials of Governance)",
-            "If the ruler gets angry and rebukes the ministers for speaking, no one will dare to advise the ruler anymore. <br>『貞観政要』 (The Essentials of Governance)",
-            "The minister's admonition is like a bright mirror; it reflects both the ruler's virtues and vices clearly. <br>『貞観政要』 (The Essentials of Governance)",
-            "If the first signs of trouble are not corrected, things will spiral out of control. Eventually, the downfall of the country will come quickly. <br>『貞観政要』 (The Essentials of Governance)",
-            "Once, Duke Qi went to the country of Guo and asked an elder, 'Why did Guo fall?' The elder replied, 'The ruler of Guo knew what was good and what was bad.' Duke Qi then asked, 'If the ruler was wise, how did the country fall?' The elder responded, 'The ruler of Guo was not wise. He knew what was good but could not use it, and he knew what was bad but could not remove it. That is why the country fell.' <br>『菅子』 (Guanzi)",
-            "The ruler is the head, and the ministers are the hands and feet. Without a body, one cannot be a person. Even if the head is on top, it is the hands and feet that make the body whole. A wise ruler can only govern with the help of capable ministers. <br>『貞観政要』 (The Essentials of Governance); 魏徴 (Wei Zheng)",
-            "Do you know Andrew Carnegie, the steel magnate? He produced a quarter of America's steel in the 19th century and became the wealthiest man in the world. <br> It is said that his success was due to his understanding of the value of people's names. He learned this when he was a child. <br><br> One day, young Carnegie secretly kept a wild rabbit but had no food for it. So he thought, 'If you bring me a lot of clover and dandelions, I will name the rabbit after you.' This plan worked perfectly. <br><br> This experience stayed with Carnegie, and later, when he expanded his business, he used this technique. In a negotiation with Pullman, he said, 'Let’s invest together and create a car company. Of course, the company will be named Pullman.' The negotiation, which seemed difficult, was quickly settled. 'Let’s go into the room and discuss it,' Pullman said with a smile, and thus the Pullman Company was born. <br> Source:『How to Win Friends and Influence People』; Chapter 1, Section 3",
-            "If the ruler treats the ministers as his hands and feet, the ministers will regard the ruler as their own heart and chest. But if the ruler treats them like dogs and horses, the ministers will think of the ruler as a passerby. If the ruler treats them like dirt or excrement, the ministers will regard the ruler as an enemy. <br>『孟子』 (Mencius)"
-        ];
+        var list_story = [
+            "迷えば薪刈り人にも、草刈り人にも聞く。<br>『詩経』",
+            "身が修まれば国は乱れない。<br>「詹何」",
+            "明君は衆人の意見を博く聞く。暗君は偏って信用する。<br>『貞観政要』",
+            "驕りの始めれば、存亡の危機に立つ。<br>『貞観政要』",
+            "殷鑑遠からず。戒めとなる手本は近くにある。歴史を鏡にすれば物事の盛衰がわかる。<br>『貞観政要』",
+            "木を成長させる者は必ず根元を固め、水を遠くまで流す者は必ずその水源を深くする。<br>『貞観政要』",
+            "民が怨むのは物事の大小でなく人君の道理にある。<br>『書経』",
+            "隋の文帝は全ての案件を一人で捌いた。しかし、10の案件をこなせば5つは道理に当たらない。何年も積み重なれば国は滅亡する<br>『貞観政要』",
+            "病人は治ったと思った時こそ、いよいよ養生しなければならない。天下が安泰になった時こそ、最も恐れ慎まなければならない。<br>『貞観政要』",
+            "民は水である。君は船である。水は船を載せる。また水は船を転覆させる。<br>『荀子』",
+            "大事は全て小事から起こる<br>『貞観政要』",
+            "昔、晋の文公は狩りに出かけて、遠く離れた沼地に入り道に迷った。そこで漁師と出会った。文公は漁師に「私はそなたの君主である。道案内をしてくれれば褒美を取らせる」と言った。ようやく抜け出して文公は漁師の名を書き留めるよう従者に命じた。しかし、漁師は「なぜ私の名を知る必要があるでしょうか。君主が国内を保ち、万民を慈愛し、労役や租税を軽くすれば、私もその恩恵をあずかりましょう。もし君主が国内をしっかりと治めず、外に対しては諸侯に無礼な態度をとり、内では人民の気持ちに逆らい、国中がさまよえば私のような漁師は褒美をもらったとしても、それを持ち続けることはできません。」と言い、とうとう褒美を受け取らなかった。<br>『新序』",
+            "君主が静かで安らかであれば、人民は安楽とならないはずがない。<br>『貞観政要』",
+            "銅を鏡とすれば身なりを正せる。昔を鏡にすれば国の興亡や盛衰を知ることができる。人を鏡とすれば自分の良い点、悪い点を明らかにできる。<br>『貞観政要』",
+            "君主が己の過ちを知ろうとすれば、必ず忠臣の意見に頼らねばならない。しかし、君主が自分を賢者と思い込めば、臣下は君主の過ちを正そうとはしなくなる。隋の煬帝はこうして滅びた<br>『貞観政要』",
+            "盲人が危ない時に手を取らず、転んでも助け起こさないのなら、付き添いなど要らない。国が滅びないように助けず、君主にゴマをする臣下では国は滅びる。臣下が君主を諌めたり、進言することで君主も国も安寧となる。<br>『貞観政要』",
+            "君主が臣下の言葉に怒り叱責すれば、君主を諌めようとする者は、もはやいなくなる<br>『貞観政要』",
+            "臣下の諫言（相手の欠点を指摘し、正すこと）は明るい鏡のように、君主の美も醜もはっきりと映す<br>『貞観政要』",
+            "最初の兆しを諌めなければ、「すでに着手してしまったから」「もう許可してしまったから」といって、結局止めたり、改められることはない。これでは、国家滅亡の災難があっというまに訪れる<br>『貞観政要』",
+            "昔、斉の垣公が郭（かく）という国にいった時、土地の父老に「郭はどうして滅びたのか」と尋ねた。父老が「郭の君主は、善を善として、悪を悪としたからです」と答えた。垣公はさらに、「そなたの言うとおりなら郭君は賢君ではないか。どうして滅亡にいたったのか」と問い直した。すると父老は「賢君ではありません。郭君は善を善としましたが、その善を用いることができず、悪を取り去ることができませんでした。だから滅んだのです」と答えた。<br>『菅子』",
+            "君主は頭で、臣下は手足であります。身体が備わってなければ、人となることはできません。頭が上にあっても、手足があって初めて身体となります。君主が優れていても、手足となる臣下によって初めて世を治めることができます。<br>『貞観政要』;魏徴",
+            "鉄鋼王 Andrew Carnegieを知っているか？19世紀にアメリカの1/4もの鋼を生産し、世界一の富豪になった男だ。<br>　彼は「人の名前」の価値を知っていたことが、成功の秘訣とも言われている。それを彼は子どもの時に学んだ。<br><br>ある日、カーネギー少年は野兎をこっそり飼っていた。だが、カーネギー少年は与える餌をもっていない。そこで考えた。「もし、クローバーとタンポポを沢山持ってきた人には、あなたの名前をこの兎に名付けよう」と友だちに言ったのだ。これは抜群にうまくいった。<br><br>この経験が忘れられなかったカーネギーは、後々、事業を拡大するときにこの技術をつかった。交渉として営業先の会社＜Pullman>にこう言ったのだ。「一緒に出資して、車会社を作らないか。もちろん社名はPullman車会社で」。ライバルであり、難航すると思われた交渉はすぐに終わった。「部屋に入って、詳しく話そうじゃないか」pullmanは笑顔でカーネギーに言い、かのプルマンが誕生したのだ<br>出典『How to win friends and influence people』;1章3節",
+            "君主が臣下を自分の手足のように扱えば、臣下は君主を自分の腹や胸のように思う。しかし、臣下を犬や馬のように扱えば、臣下は君主を通りすがりの人のように思う。もし臣下を糞や土のように扱えば、臣下は君主を仇敵のように怨む。<br>『孟子』"
         
+        ];
 
         var list_result = [
-            "Today's work fortune is a bit unstable. Small mistakes may occur more easily. It is important to be more cautious and thorough than usual. By doing so, mistakes can be avoided.",
-            "It looks like today will be a very good day. Work will go smoothly, and everything will progress without any issues. It's also a great opportunity to start a new project or business.",
-            "Today's fortune is fairly neutral. It's important to proceed steadily, without pushing yourself too hard. Take breaks when needed and refresh yourself while moving forward.",
-            "Today will be a day of smooth progress. Many tasks will be completed as planned, and you'll be able to handle your work without any problems.",
-            "Today's fortune might be a bit unfavorable. It's likely that you’re feeling the buildup of daily fatigue. On such a day, it's recommended to take care of yourself and rest, rather than pushing through."
+           "今日の仕事運は少し不安定な状況です。小さなミスが発生しやすくなるかもしれません。普段よりも慎重に、丁寧に取り組むことが重要です。そうすれば、ミスは避けられるでしょう。",
+            "今日は非常に良い一日となる予感です。仕事が順調に進み、全てがスムーズに運ぶでしょう。また、新しいプロジェクトや事業を始めるには絶好のチャンスです。",
+            "今日の運勢はまぁまぁな感じですね。無理せず、一歩ずつ着実に進んでいくことが大切です。休憩も適宜取って、しっかりとリフレッシュしながら進めましょう。",
+            "今日は順調に進む一日になるでしょう。多くのことが予定通りに終わり、特に問題なく業務をこなせる日です。",
+            "今日は運勢が少し悪いかもしれません。日々の疲れが溜まっている可能性が高いです。こんな日は無理せず、自分をしっかりと労わり、休養を取ることをおすすめします。",
         ]
-        
 
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
-        var result = `${list_result[this.uranai_fix_ind * 4 % list_result.length]}<br><br>Let us send you an old saying that will bring you luck.<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝<br><br>I wish you a good day.`
+        var result = `${list_result[this.uranai_fix_ind * 4 % list_result.length]}<br><br>そんなあなたの為に運気をあげる古語を送りましょう。<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝<br><br>良い一日となりますように。`
         
         this.modal.innerHTML = result;
     }
 
     uranai_relationship(){
         var list_story = [
-            "People are only interested in themselves. Therefore, they become fond of those who show interest in them. If you want to become close to someone or negotiate, it’s important to first take an interest in that person. Then, they will also take an interest in you. <br> Source: 'How to Win Friends and Influence People' Chapter 1, Section 1",
-            "A smile has the power to change lives. Let me tell you the story of a man. <br> There was a man working as a stockbroker in New York. He had been married for 18 years. However, recently, he hadn't shown a smile to his wife at all. He considered himself the most unsmiling husband in New York. <br> One day, he was troubled by this life and attended a lecture by Carnegie. There, he learned about 'the importance of a smile.' He immediately tried smiling at his wife at home. She was so surprised and asked, 'What happened?' From that day on, he decided to smile at his wife every morning. As a result, their home became happier than ever before. <br> He also tried this at work, and transactions began to go more smoothly than usual. He said, 'A smile brought me money every day.' He became a happier and richer man with the power of a smile. <br> Source: 'How to Win Friends and Influence People' Chapter 1, Section 2",
-            "A smile enriches life. Actions and emotions move together. Happiness doesn't come from the outside; it comes from within by smiling. Simply forcing a smile can make you feel surprisingly happy, enrich your life, and improve relationships. <br> Source: 'How to Win Friends and Influence People' Chapter 1, Section 2",
-            "Visualize the ideal person you want to become. What kind of person do you want to be? If you think about this constantly, you will naturally draw closer to your ideal. <br> Source: 'How to Win Friends and Influence People' Chapter 1, Section 2",
-            "There is a politician named James Farley who helped Roosevelt become president. He remembered the names of 500,000 people. Before Roosevelt's election, James visited many voters, shook hands, asked their names, and asked questions like, 'How are the hollyhocks in this beautiful garden?' During the campaign, he sent a letter to each household he visited. He knew that 'being called by name and being remembered' is a very effective compliment. As a result, Roosevelt became president with many votes. <br> Remembering names and calling them may seem trivial, but it has a wonderful effect. <br> Source: 'How to Win Friends and Influence People' Chapter 1, Section 3",
-            "The best gift people can receive is someone who listens to their story with genuine interest. <br> However, superficial interest is quickly detected. You must genuinely care about what the other person is saying. <br> Source: 'How to Win Friends and Influence People' Chapter 1, Section 4",
-            "President Lincoln, during the Civil War, invited friends to his home to solve his worries. However, Lincoln was satisfied without hearing advice from his friends and sent them home. <br> Lincoln wasn’t looking for advice; he simply wanted someone who would listen to him with genuine concern. <br> This is the same thing many angry customers are looking for. <br> Source: 'How to Win Friends and Influence People' Chapter 1, Section 4",
-            "President Roosevelt always did something the night before guests arrived. He made sure to learn about their interests from books and then discussed what was most important to them. <br> If the president can do it, why can't we? <br> Source: 'How to Win Friends and Influence People' Chapter 1, Section 5"
+            "人は自分にしか興味がない。だから、自分に興味を持ってくれた人のことが好きになる。<br>何か仲良くなりたい・交渉したいなら、まずその人に興味をもつことが大切だ。そしたら相手も私に興味をもってくれる。<br>出典『How to win friends and influence people』;1章1節",
+            "ほほえみが人生を変えたことがある。ある男のお話をしよう。<br>　ニューヨークに株式仲介人として働く男がいた。彼は18年連れ添った妻がいる。しかし、最近はまったく妻に対して笑顔を見せていない。ニューヨークの夫婦で一番、不愛想な夫だと自負していた。<br>　ある日、彼はこの生活に悩みカーネギ氏の講演に参加した。そこで彼は「笑顔の大切さ」を学んだ。さっそく家で妻に微笑んでみた。妻は彼を見て驚き、「どうしたの」ってうろたえてたさ。この日から、彼は毎朝妻に微笑むことにした。そうしたら、どんどん家庭がこれまで以上に幸せに包まれた。<br>　これを職場でも彼はやってみた。すると、いつもより取引が順調に成功していったんだ。彼は「笑顔が毎日、毎日お金を運んでくれた」と言っている。笑顔でより幸せで、豊かな男になったのだ<br>出典『How to win friends and influence people』;1章2節",
+            "笑顔は人生を豊かにする。行動と感情は一緒にうごく。幸せは外から来るんじゃない。笑顔になることで内から沸いてくる。ただ、作り笑いをするだけで　不思議と幸せな気分となり、人生は豊かになり、人間関係も豊かになる。<br>出典『How to win friends and influence people』;1章2節",
+            "なりたい理想を想い浮かべて。どんな人になりたい？　毎時、ずっとそれを思えば、不思議と理想に近付いていくのだよ<br>出典『How to win friends and influence people』;1章2節",
+            "ルーズベルトを大統領にした、政治家にJames Farleyという人がいる。彼は５００,０００人の名前を覚えていた。ルーズベルトの選挙前、Jamesは多くの有権者を訪問した。握手をし、名前を尋ね、そして「この素敵な庭のタチアオイは？」等と聞いて回った。選挙期間になると、尋ねて回った家庭一軒ずつ手紙を送った。彼は「名前を呼ばれる・覚えられていること」はとても有効な誉め言葉であることを知っていたのだ。その結果、多くの投票によりルーズベルトは大統領になった。　<br>名前を覚え、名前を呼ぶことは些細であるが、素晴らしい効果をもたらす。<br>出典『How to win friends and influence people』;1章3節",
+            "人が一番うれしいプレゼントは、興味を持って自分の話しを聞いてくれることだ。<br>しかし、うわべ上の興味はすぐにばれる。心から相手の話しに興味をもたなければならない<br>出典『How to win friends and influence people』;1章4節",
+            "リンカーン大統領は南北戦争の時、悩みを解決するために友人を家に呼んだという。しかし、リンカーン大統領は友人からのアドバイスを聞かないまま満足してしまい、友人を帰らせた。<br><br>リンカーン大統領はアドバイスを求めていたわけではなかったのだ。ただただ、親身に話を聞いてくれる相手を求めていたのだ。<br>これは、多くの怒った客が求めていることと同じである。<br>出典『How to win friends and influence people』;1章4節",
+            "ルーズベルト大統領は、客人が来る前夜に必ずしていたことがある。客人の好きな物事について本などで知識を持つことだ。そして、相手のもっとも大切にしていることについて話すのだ。<br><br>大統領にできて、なぜ我々にできないだろうか。<br>出典『How to win friends and influence people』;1章5節"
         ]
-        
 
         var list_result = [
-            "Today's luck with people might be a little rough, but hey, don't forget to show your gratitude. Try saying 'thank you' more than usual today, and maybe some good things will come your way.",
-            "Today, your luck with people is looking really good. You'll probably get help from a lot of folks. A day like this is a great chance to return the favors you've received. Doing that will boost your luck even more.",
-            "Today’s just okay, nothing extraordinary. Why not do something nice for someone? Pour someone a drink, pick up some trash—small things like that can really help boost your luck.",
-            "It looks like it's going to be a good day today. You'll get to meet the people you want to see, and even if you run into someone you don’t get along with, it won’t be as stressful as you think.",
-            "Today's luck seems a bit off. You might be feeling tired, so it’s probably better to take it easy today. Those tired looks and irritations will fade once you get the rest you need."
+            "今日の人運はちょいと悪いかもしんねぇな。でもな、感謝の気持ちだけは忘れんなよ。普段よりも『ありがとう』って言葉をしっかり伝えてみな、いいことあるかもしんねぇぞ。",
+            "今日の人運はめちゃくちゃいい日だな。色んな人から協力してもらえるだろうよ。こういう日は、普段からの恩を返すチャンスだぜ。そしたら運気も上がって、もっと良くなっていくぞ。",
+            "まぁまぁって感じの日だな。今日はお前がちょっと善いことしてみなよ。誰かにお茶を注ぐとか、ゴミ拾いとか、そんな小さなことでいいんだ。それが運気を上げる秘訣だぜ。",
+            "今日はいい日になるだろうよ。会いたい奴に会えるし、苦手な人とも会っても意外とストレス感じない運気だな。",
+            "今日の運勢はちょっと悪いかもしんねぇ。疲れが溜まってるかもしれんし、こんな日はゆっくり休んだ方がいいぜ。疲れた顔やイライラも、しっかり休んだら解消するからな。"
         ]
-        
 
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
-        var result = `${list_result[this.uranai_fix_ind  * 5 % list_result.length]}<br><br>"I’m sendin’ you a story to boost your luck, alright?"<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝`
+        var result = `${list_result[this.uranai_fix_ind  * 5 % list_result.length]}<br><br>あんたの為に運気をあげる話を送る。<br>＝＝＝＝＝＝＝＝＝＝＝<br>　${list_story[this.uranai_fix_ind % list_story.length]}<br>＝＝＝＝＝＝＝＝＝＝＝`
         
         this.modal.innerHTML = result;
     }
 
     uranai_study(){
         var list_luckyitems = [
-            "Notebook",
-            "Ballpoint pen",
-            "High-quality pencil",
-            "Sticky notes",
-            "Colored pens",
-            "Ruler",
-            "Checklist",
-            "Study plan sheet",
-            "Reference book",
-            "Marker",
-            "Wireless headphones",
-            "Quiet place",
-            "Alarm clock",
-            "Comfortable chair",
-            "Folder",
-            "Small memo pad",
-            "Charger",
-            "Whiteboard",
-            "Clear file",
-            "Timer",
-            "App",
-            "Computer",
-            "Smartphone",
-            "Glasses",
-            "Book light",
-            "Hot drink",
-            "Water bottle",
-            "Comfortable desk environment",
-            "Warm slippers",
-            "Bright desk lamp",
-            "Concentration-enhancing music",
-            "Meal",
-            "Study buddy",
-            "Motivational poster",
-            "Calendar",
-            "Sleep accessories",
-            "Chocolate",
-            "Stretch mat",
-            "Yoga ball",
-            "Eye strain relief mask",
-            "Incense",
-            "Smartwatch",
-            "Healthy lunch",
-            "Seasonal flowers",
-            "Small desk plants",
-            "Travel pouch",
-            "Breaktime music playlist",
-            "Relaxing bath salts",
-            "Aromatherapy candle",
-            "Caffeine-free drink"
-        ]
-        
-        var list_result =[
-            "Hmm, today's academic fortune is exceedingly favorable. Your capacity for knowledge acquisition is exceptionally high, and you will likely approach even the most challenging tasks with appropriate strategies. However, I caution you against complacency. Proceed with careful consideration, without overestimating your abilities. To achieve success, relentless effort is paramount. Delve deeper into your thoughts and avoid unnecessary missteps.",
+            "ノート",
+            "ボールペン",
+            "高品質な鉛筆",
+            "付箋",
+            "カラーペン",
+            "定規",
+            "チェックリスト",
+            "学習計画表",
+            "参考書",
+            "マーカー",
+            "ワイヤレスヘッドフォン",
+            "静かな場所",
+            "目覚まし時計",
+            "快適な椅子",
+            "フォルダー",
+            "細かいメモ帳",
+            "充電器",
+            "ホワイトボード",
+            "クリアファイル",
+            "タイマー",
+            "アプリ",
+            "パソコン",
+            "スマートフォン",
+            "眼鏡",
+            "ブックライト",
+            "ホットドリンク",
+            "水筒",
+            "快適なデスク環境",
+            "暖かいスリッパ",
+            "明るいデスクランプ",
+            "集中を助ける音楽",
+            "食事",
+            "勉強仲間",
+            "モチベーションを高めるポスター",
+            "カレンダー",
+            "睡眠用具",
+            "チョコレート",
+            "ストレッチマット",
+            "ヨガボール",
+            "眼精疲労用アイマスク",
+            "お香",
+            "スマートウォッチ",
+            "健康的な昼食",
+            "季節の花",
+            "デスク周りの小さな観葉植物",
+            "トラベルポーチ",
+            "休憩用の音楽プレイリスト",
+            "リラックスできる温泉バスソルト",
+            "アロマキャンドル",
+            "カフェインを含まない飲み物"
+        ];
+        var list_result = [
+            "ふむ、今日の学業運は極めて良好だ。お前の知識吸収力が非常に高く、難解な課題に対しても適切なアプローチができるだろう。だが、油断してはいけない。何事も慎重に、過信せず進め。成功を得るためには、努力を続けることが肝要だ。考えを深め、無駄な一歩を踏み外すな。",
             
-            "Today, you may experience a somewhat positive fortune. It is an opportune moment to acquire new knowledge, but do not be careless, as a lack of concentration will only lead to wasted time. Maintain your composure and focus at all times. If you approach your learning with diligence, substantial growth may follow. However, do not succumb to haste.",
+            "今日は少しばかり良い運気だろう。新しい知識を得るには好機だが、集中力を欠けば無駄に時間を浪費することになるぞ。どんな状況でも、冷静さと注意力を保ちなさい。前向きに学べば、大きな成長を期待できるかもしれん。しかし、焦りは禁物だ。",
             
-            "Your academic fortune is quite average today. There are no extraordinary events to expect, but if you proceed with your usual routine, all should be well. That being said, do not mistake stability for complacency. Steady progress and a solid foundation are essential for future success. Avoid arrogance, and be mindful of the importance of consistent effort each day.",
+            "学業運はごく普通だ。何も特別な出来事はないだろうが、普段通り進めば問題はない。ただし、安定していれば安心してよいというわけではない。着実に物事を進め、基礎を固めることが、将来の成功を支えるのだ。慢心せず、日々積み重ねることが肝心だ。",
             
-            "Hmm, it seems your fortune today is somewhat unfavorable. You may experience a lack of focus, and progress will be slower than expected. Yet, remember, this too is a valuable experience. Forcing progress when the conditions are not right will be futile, and sometimes, it is wise to pause. Take time to calm your mind and rest; ultimately, this will prove beneficial. Do not rush.",
+            "ふむ、今日は少々運が悪いようだ。集中力が途切れ、思うように進まないだろう。だが、これも一つの経験だ。無理に進めることは無駄だし、時には立ち止まることも大切だ。心を落ち着けて休むことが、最終的にはプラスになるだろう。焦ってはいけない。",
             
-            "The situation is dire. Your academic fortune is thoroughly in decline today. No matter how hard you try, success is unlikely. However, bear in mind that every adversity carries its lessons. It is essential to learn from failure and prepare for the future. Do not panic; instead, take this time to reflect and regroup. It would be wise to avoid unnecessary haste."
-        ]
-        
+            "最悪だ。学業運は完全に低迷している。今日のような日は、無理をしても成果は上がらない。だが、覚えておけ、どんな苦境にも意味がある。失敗から学び、次回に備えることが肝要だ。慌てず、今日はゆっくりと振り返ることが賢明だろう。"
+          ];
 
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
-        var result = `${list_result[this.uranai_fix_ind * 7 % list_result.length]}<br><br>Lucky items for academic luck are <br>${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}.`
+        var result = `${list_result[this.uranai_fix_ind * 7 % list_result.length]}<br><br>学業運を上げるラッキーアイテムは<br>${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}ぞ。`
         
         this.modal.innerHTML = result;
     };
 
     uranai_love(){
-        var list_result = [
-            "Today is a day where everything goes just as you wish. If you're feeling good, you might bump into that special someone, or perhaps find yourself in the midst of a delightful surprise. The flow of today feels as though I am gently guiding it. <br><br> Your lucky item is sunlight.",
-            
-            "Fate may just have something intriguing in store for you today. You could meet someone fated, but be cautious. You never know who you might cross paths with. Just be careful with your words. <br><br> Your lucky item is ginger and honey.",
-            
-            "Look ahead for a change, try not to stare at your phone too much. Perhaps you’re passing by your first love without even realizing it. Fate might be subtly guiding you in this very moment. <br><br> Your lucky item is umeboshi (pickled plums).",
-            
-            "Today is a day better spent in quiet relaxation. If you rush about, it could lead to undesirable results. So, be kind to yourself today and take things slowly. <br><br> Your lucky item is hand cream.",
-            
-            "There’s a chance you’ll meet someone you fancy today. Refresh yourself and dress up nicely. If you’re prepared in your heart, the meeting will happen soon enough. Your lucky item is something with a delightful fragrance. Let the scent enhance your charm. <br><br> Your lucky item is something with a lovely scent."
-        ]
-        
+        var list_result =  [
+            "今日は、何もかも思い通りになる、そんな素敵な日よ。調子が良ければ、好きな人と偶然会ったり、思いがけないサプライズに出会ったり。今日の流れは、まるで私がそっと導いているみたい。<br><br>ラッキーアイテムは太陽の光",
+            "今日の運命、もしかしたらあなたは運命の相手と出会うかもしれないわよ。だけど、気をつけて。あなたが誰と出会うかなんて、誰にも分からないわ。言葉遣いにだけは気をつけてね。<br><br>ラッキーアイテムは生姜と蜂蜜",
+            "ちょっと前を向いて歩いてみなさい、スマホを見すぎないようにね。ひょっとしたら、初恋の相手とすれ違ってるかもしれないわ。運命があなたをそっと導いているかもしれない。<br><br>ラッキーアイテムは梅干し",
+            "今日は何もせず、穏やかに過ごす方が良い日よ。焦って動くと、良くない結果を招くかもしれない。だから今日は、自分に優しく、ゆっくり休んで。<br><br>ラッキーアイテムはハンドクリーム",
+            "好きな人に会うチャンスがある日よ。気分を新たにして、素敵な格好で出かけてみなさい。心の準備ができたなら、すぐにでも会えるはず。あなたのラッキーアイテムは、いい匂いのもの。香りで魅力を引き出して。<br><br>ラッキーアイテムはいい匂いのもの"
+          ];
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
@@ -1410,56 +1395,50 @@ class DialogueSystem{
 
     uranai_burokkori(){
         var product_place = [
-            "America", "China", "Mexico", "Canada", "Australia", 
-            "Spain", "Italy", "South Korea", "New Zealand", "Chile"
+            "北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", 
+            "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", 
+            "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県", 
+            "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", 
+            "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", 
+            "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", 
+            "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", 
+            "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県",
+            "アメリカ", "中国", "メキシコ", "カナダ", "オーストラリア", 
+            "スペイン", "イタリア", "韓国", "ニュージーランド", "チリ"
         ]
-        
 
         var list_luckyitems = [
-            "Arcadia",
-            "Green Magic",
-            "Marathon",
-            "Gypsy",
-            "Premium",
-            "Violin",
-            "Shogun",
-            "Pacemaker",
-            "Coronado",
-            "Green Queen",
-            "Lucky",
-            "Misty",
-            "Top Green",
-            "Empire",
-            "Nutra",
-            "Northstar",
-            "Bristol",
-            "Imperial",
-            "Green King",
-            "Jetstar"
-          ]
-          
+            "アレッタ®",
+            "おはよう®",
+            "ピクセル®",
+            "サマードーム®",
+            "スターラウンド®",
+            "ジェットドーム®",
+            "ファイター®",
+            "グランドーム®",
+            "こんにちは®",
+            "クリア®",
+            "ウインタードーム®",
+            "ベルネ®",
+            "ボルト®",
+            "はつみらい®",
+            "むつみ®",
+            "アーリーキャノン®",
+            "快緑®"
+        ];
         var list_result = [
-            "Today is a super big broccoli day!", 
-            "Eat broccoli and feel full of energy!", 
-            "Today is a cauliflower day!", 
-            "Your beauty luck is on the rise!", 
-            "Today, young leaves have started to sprout!", 
-            "Feels like broccoli is just around the corner!", 
-            "Early to bed, early to rise for a healthy life!", 
-            "Broccoli might be withering.", 
-            "Drink lots of water for smooth blood and healthy broccoli!", 
-            "Take care of your health!", 
-            "It feels like the bugs ate my broccoli.", 
-            "Hmm... but it's okay.", 
-            "Tomorrow will be a sunny day!", 
-            "Grow strong, broccoli!"
+            "今日は特大ブロッコリーな一日！ブロッコリーを食べて元気いっぱい！！",
+            "今日はカリフラワーな一日！美容の運気が上がっているよ！",
+            "今日、若葉が生えてきたよ！　ブロッコリーまでもう少しな気分！　早起き早寝で元気な生活！",
+            "ブロッコリーは枯れてきたかも。お水をたくさん飲んで　血液サラサラブロッコリー！体調に気を付けて！",
+            "虫さんがブロッコリー食べちゃった気分。うーん・・・でも大丈夫。明日はサンサン太陽！グングンブロッコリー！"
         ]
         
         //------------------
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
 
-        var result = `${list_result[this.uranai_fix_ind * 9 % list_result.length]}<br><br>Today's lucky production area is【${product_place[this.uranai_fix_ind % product_place.length]}】Yes Broccoli！<br><br>and the lucky variety of broccoli is 【${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}】！！`
+        var result = `${list_result[this.uranai_fix_ind * 9 % list_result.length]}<br><br>今日のラッキー生産地は【${product_place[this.uranai_fix_ind % product_place.length]}産】ブロッコリー！。<br><br>ラッキー品種は【${list_luckyitems[this.uranai_fix_ind % list_luckyitems.length]}】だよ！。`
         
         this.modal.innerHTML = result;
     };
@@ -1467,36 +1446,35 @@ class DialogueSystem{
     uranai_usatyann(){
        
         var list_result = [
-            "You will find a 10 yen coin in your wallet.",
-            "You will meet a classmate from university.",
-            "You will be thanked by many people.",
-            "You will bump your little finger on the dresser.",
-            "You will encounter a genre of music you've never explored before.",
-            "The button on your dress shirt will come off.",
-            "Your soy sauce will run out at just the right time.",
-            "A man with a beard and long hair will tell you something important.",
-            "Your skin will become a bit more radiant.",
-            "You will get a promotion.",
-            "Your love for your favorite person will cool down.",
-            "Good things will happen if you make a donation.",
-            "It will rain heavily, so you should carry an umbrella.",
-            "You will find the winning stick in an ice cream.",
-            "You will sleep well tonight.",
-            "The price of shimeji mushrooms will be 200 yen.",
-            "A new family member will join your household.",
-            "You will replace your cell phone.",
-            "A new palmistry line will appear on your right hand.",
-            "There will be a change in your weight.",
-            "You will hear a baby crying.",
-            "That company will merge.",
-            "You will meet someone with a rare surname.",
-            "You will make a shopping mistake.",
-            "You will realize a new side of yourself.",
-            "A turning point will come.",
-            "You will get lost on the road.",
-            "You will have the best day of your life."
-          ]
-          
+            "財布の中にギザ10が入っているでしょう。",
+            "大学時代の同級生に会うでしょう。",
+            "たくさんの人から「ありがとう」と言われるでしょう。",
+            "タンスに小指をぶつけるでしょう。",
+            "未開拓のジャンルの音楽と出会うでしょう。",
+            "ワイシャツのボタンがとれるでしょう。",
+            "ちょうど醤油が切れるでしょう。",
+            "髭が生えたロン毛の男性から大切なことを言われるでしょう。",
+            "肌ツヤが少し良くなるでしょう。",
+            "昇進するでしょう。",
+            "推しへの愛が冷めるでしょう。",
+            "募金をするといいことがあるでしょう。",
+            "大雨なので傘を持った方が良いでしょう。",
+            "アイスのあたり棒に出会えるでしょう。",
+            "寝つきがいいでしょう。",
+            "しめじが200円になるでしょう。",
+            "新しい家族が増えるでしょう。",
+            "携帯電話を買い替えるでしょう。",
+            "右手に新たな手相が現れるでしょう。",
+            "あなたの体重に変化が起こるでしょう。",
+            "赤ちゃんの泣き声を聞くでしょう。",
+            "あの会社が合併するでしょう。",
+            "珍しい苗字の人と出会うでしょう。",
+            "買い物に失敗するでしょう。",
+            "自分の新たな一面に気づくでしょう。",
+            "転機が訪れるでしょう。",
+            "道に迷うでしょう。",
+            "過去最高の一日を過ごすでしょう。"
+          ];
         var today = new Date();
         var year = today.getFullYear();
         var month = today.getMonth() + 1; // 月は0始まり
@@ -1509,7 +1487,7 @@ class DialogueSystem{
         //this.uranai_fix_ind = Math.floor(Math.random() * 1001);
         //-------------------
 
-        var result = `<br><br>In the bunny year of 2035, ${formattedDate}<br><br>${list_result[this.uranai_fix_ind  * 11 % list_result.length]}`
+        var result = `<br><br>卯年である2035年の${formattedDate}<br><br>${list_result[this.uranai_fix_ind  * 11 % list_result.length]}`
         
         this.modal.innerHTML = result;
     };
@@ -1699,12 +1677,12 @@ class SiteSystem{
         //==============================================================================================
         {//【右の間　占い】box
             this.dialogues_right_uranai = [//【右の間　占い】会話パック
-                "<br>We will guide you upstairs.<br>pay attension to your foot"
+                "<br>では、天の間へご案内します。<br>2階への階段をお進みください"
             ];
             this.orders_right_uranai = [//【右の間　占い】命令パック
                 ["load"],
-                ["select_uranai_r","<br>Please select the fortuneteller"],
-                ["judge_book","<br>The fortune teller you entered is not on the roster. Please enter again.",1,1],
+                ["select_uranai_r","<br>占い師を選択してください。"],
+                ["judge_book","<br>入力された占い師は名簿にありません。<br>もう一度入力してください",1,1],
                 ["call_booked_fortune_teller"]
             ];
             this.right_uranai_box = [this.dialogues_right_uranai,this.orders_right_uranai];
@@ -1712,12 +1690,12 @@ class SiteSystem{
          //==============================================================================================
         {//【左の間　占い】box
             this.dialogues_left_uranai = [//【左の間　占い】会話パック
-                "<br>Now, let me show you to the first floor.<br>Please note that it is dark underfoot."
+                "<br>では、地の間へご案内します。<br>足元暗いのでご注意ください"
             ];
             this.orders_left_uranai = [//【右の間　占い】命令パック
                 ["load"],
-                ["select_uranai_l","<br>Please select the fortuneteller"],
-                ["judge_book","<br>The fortune teller you entered is not on the roster. Please enter again.",1,1],
+                ["select_uranai_l","<br>占い師を選択してください。"],
+                ["judge_book","<br>入力された占い師は名簿にありません。<br>もう一度入力してください",1,1],
                 ["call_booked_fortune_teller"]
             ];
             this.left_uranai_box = [this.dialogues_left_uranai,this.orders_left_uranai];
@@ -1726,31 +1704,31 @@ class SiteSystem{
         {//【新規登録】box
             this.dialogues_pattern_register = [//【新規登録】会話パック
                                 
-                "<br>Welcome to the Fortune Teller's House.<br>I've been waiting for the day we could meet.", //0
-                "<br>First, could you please tell me your name and date of birth?<br>(Changes are not allowed later)", //1
-                "<br>Thank you very much.<br>Now, let me explain about the Fortune Teller's House.", //3
-                "In the Fortune Teller's House, <br>you can receive various readings<br>from a wide range of fortune tellers.", //4
-                "<br>There are two rooms available.<br>Each has four fortune tellers.", //7
-                "Enter the fortune teller's name <br>or tap their image.<br>Then, press the confirm button.", //8
-                "You will then be able to receive a reading <br>from the selected fortune teller.<br>Scroll down to read the results of your fortune.", 
-                "<br>The results at our Fortune Teller change<br>when the date changes. Enjoy it every day." //10
+                                    "<br>ようこそ　占いの館へ。<br>あなたに会える日を待っていましたよ。", //0
+                                    "<br>まずは、お名前と生年月日を教えてくれますか？<br>(後から変更不可)",     //1
+                                    "<br>ありがとうございます。<br>では、占いの館について説明いたします。",          //3
+                                    "<br>占いの館では様々な占い師から、<br>色んな占いを受けることができます。",     //4
+                                    "<br>二つのお部屋があります。<br>それぞれ4名の占い師が在籍しています。",            //7
+                                    "<br>占い師の名前を入力・または画像をタップします。<br>その後、確定ボタンを押します", //8
+                                    "<br>すると、選択した占い師による占いができます<br>占い結果は下部にスクロールしてお読みください。",
+                                    "<br>当占いの館は日付が変わると占い結果が<br>変わります。毎日お楽しみください。"                                   //10
             ]   
             {//【新規登録】命令パック
                 this.orders_pattern_register = [
                     ["load"],
                     ["next"],
-                    ["input_name","Please enter your name"],
+                    ["input_name","名前を入力してください"],
                     ["input_birth_day"],
-                    ["check_<change_d&s_index>",1,1,"<br>Is #command_user_name#'s birth day <br>#command_birth_day#？"],
-                    ["save","<br>I have registered your customer."],
+                    ["check_<change_d&s_index>",1,1,"<br>#command_user_name#さんは<br>#command_birth_day#生まれですね？"],
+                    ["save","<br>お客様を登録いたしました。"],
                     ["next"],
                     ["next"],
                     ["next"],
                     ["next"],
                     ["next"],
                     ["next"],
-                    ["check_<change_d&s_index>",7,4 ,"That is all for the explanation.<br>If you want to hear it again,<br> press the “No” button."],
-                    ["change_d&s_pack",this.left_uranai_box,"1F", this.right_uranai_box,"2F","<br>Welcome #command_user_name# again.<br> In which floor would you like to have your fortune told?"]
+                    ["check_<change_d&s_index>",7,4 ,"<br>説明は以上になります。<br>もう一度聞く場合「いいえ」ボタンを<br>押してください。"],
+                    ["change_d&s_pack",this.left_uranai_box,"地の間", this.right_uranai_box,"天の間","<br>#command_user_name#様。<br>改めていらっしゃいませ。<br>どちらのお部屋で占いましょうか"]
                   ];            
             }   
             this.orderbox_pattern_register = [this.dialogues_pattern_register, this.orders_pattern_register,this.orders_list4log_pattern_register]; 
@@ -1760,17 +1738,17 @@ class SiteSystem{
         {//【login】box
 
             this.dialogues_pattern_login = [//【login】会話パック
-                "<br>Now, please provide your registered name and date of birth.",
-                `<br>#command_user_name#, correct?<br>Let me confirm...`
+                "<br>では、登録したお名前と生年月日を教えてください",
+                `<br>#command_user_name#様ですね。<br>確認いたします・・・`
             ];
             {//【login】命令パック
 
                 this.orders_pattern_login = [
                     ["load"],
-                    ["input_name","Please enter your registered name"],
+                    ["input_name","登録した名前を入力してください"],
                     ["input_birth_day"],
-                    ["judge_id","<br>We are sorry. Your data could not be found.<br> Please try again.",0,0],
-                    ["change_d&s_pack",this.left_uranai_box,"1F", this.right_uranai_box,"2F","<br>Welcome #command_user_name# again.<br> In which floor would you like to have your fortune told?"]
+                    ["judge_id","<br>申し訳ございません。お客様のデータがありません。<br>もう一度入力してください",0,0],
+                    ["change_d&s_pack",this.left_uranai_box,"地の間", this.right_uranai_box,"天の間","<br>#command_user_name#様。<br>改めていらっしゃいませ。<br>どちらのお部屋で占いましょうか"]
                 ]
             }
             this.orderbox_pattern_login = [this.dialogues_pattern_login, this.orders_pattern_login];
@@ -1780,11 +1758,11 @@ class SiteSystem{
         {//【受付】box(一番最初に読み込む用。)
             this.orderbox_check_register_or_login_unlogined = [
                 [""],//empty dialogue pack
-                [["change_d&s_pack",this.orderbox_pattern_login,"Yes" ,this.orderbox_pattern_register,"No","<br>Welcome to Fortune-Telling House..<br> Have you ever been to our house?"]],
+                [["change_d&s_pack",this.orderbox_pattern_login,"はい" ,this.orderbox_pattern_register,"いいえ","<br>ようこそ　占いの館へ<br>お客さまは当店へ来られたことがありますか？"]],
             ];
             this.orderbox_check_register_or_login_logined = [
                 [""],//empty dialogue pack
-                [["change_d&s_pack",this.left_uranai_box,"1F", this.right_uranai_box,"2F","<br>Welcome #command_user_name# again.<br> In which floor would you like to have your fortune told?"]]
+                [["change_d&s_pack",this.left_uranai_box,"地の間", this.right_uranai_box,"天の間","<br>#command_user_name#様。<br>改めていらっしゃいませ。<br>どちらのお部屋で占いましょうか"]]
             ]
         }
     }
@@ -1792,9 +1770,9 @@ class SiteSystem{
     make_fortunetellers_boxs(){
         {//アペプ金運
             this.dialogues_gold = [
-               "<br>I am Apep.<br>I will divine your financial fortune.",
-                "<br>𓁹𓎆𓎛𓈖𓎡...",
-                "<br>I will be waiting for you again tomorrow."
+                "<br>私はアペプ。<br>あなたの金運を占います。",
+                "<br>𓁹𓎆𓎛𓈖𓎡・・・",
+                "<br>明日も待っています"
             ];
 
             this.orders_gold = [
@@ -1811,9 +1789,9 @@ class SiteSystem{
 
         {//バシリスク人間関係
             this.dialogues_relationship = [
-                "<br>Yo. I see a lot of people around you.<br>Let's check out your relationships.",
-                "<br>Huh... interesting.",
-                "<br>Come back anytime."
+                "<br>よぅ。周りに沢山の人がみえる。<br>人間関係を占っていく。",
+                "<br> ほぅ・・・おもしろい",
+                "<br>いつでも来な"
             ];
 
             this.orders_relationship = [
@@ -1830,10 +1808,9 @@ class SiteSystem{
 
         {//ブロッコリー
             this.dialogues_burokkori = [
-                "<br>Freshly picked broccoli from this morning!<br>Wanna get your fortune told???",
-                "<br>BROOOO-COOOLIII!",
-                "<br>Eat up lots of broccoli, okay!"
-
+                "<br>朝採れたての新鮮ブロッコリーぞい！<br>占うか？？？",
+                "<br>ぶろぉーぉぉ",
+                "<br>いっぱい食べてね、ブロッコリー！"
             ];
 
             this.orders_burokkori = [
@@ -1850,9 +1827,9 @@ class SiteSystem{
 
         {//ラミア―
             this.dialogues_love = [
-                "<br>I am Lamia.<br>Hehe, you've come for a love fortune, haven't you?",
-                "<br>Let me see your blood... Oh my.",
-                "<br>Come visit me anytime. (slurp)"
+                "<br>私はラミア―。<br>フフ、あなたも恋占いをしにきたのね",
+                "<br>あなたの血を見せてね・・・あら",
+                "<br>いつでもきてね。(ペロ)"
             ];
 
             this.orders_love = [
@@ -1869,9 +1846,9 @@ class SiteSystem{
 
         {//ヒュドラ
             this.dialogues_work = [
-               "<br>My name is Hydra.<br>I will examine your career fortune.",
-                "<br>(Clickety-clack)... Here are the results.",
-                "<br>We look forward to your next visit."
+                "<br>私はヒュドラと申します。<br>お客様の仕事運を占います。",
+                "<br>（カタカタカタ）・・・出ました",
+                "<br>またのご来店お待ちしております。"
             ];
 
             this.orders_work = [
@@ -1888,10 +1865,9 @@ class SiteSystem{
 
         {//すこやか
             this.dialogues_health = [
-               "<br>Nice to meet you, I'm Healthy.<br>I will examine your health.",
-                "<br>Please show me your mouth...<br>Ah, I see...",
-                "<br>Take care of yourself."
-
+                "<br>初めまして、すこやかです。<br>あなたの健康を占います",
+                "<br>口の中を見せて下さい・・・<br>あー　なるほど・・・",
+                "<br>お大事になさってください。"
             ];
 
             this.orders_health = [
@@ -1908,10 +1884,9 @@ class SiteSystem{
 
         {//ケーリュ
             this.dialogues_study = [
-                "<br>I am Caduceus. Please, call me Cad.<br>I will now read your academic fortune.",
-                "<br>Hmm... I see.",
-                "<br>If you are uncertain, feel free to seek my guidance."
-
+                "<br>わたしゃケーリュケイオン。ケーリュと呼んでくれ。<br>学業の運勢を占うぞ。",
+                "<br>ほぉ・・・そうか",
+                "<br>迷えばわたしを尋ねるがよい"
             ];
 
             this.orders_study = [
@@ -1928,18 +1903,13 @@ class SiteSystem{
 
         {//うさちゃん
             this.dialogues_usatyann = [
-                "<br>I am Bunny. <br>In Japan, we have something called the zodiac.",
-                "<br> Two years ago was my year, <br>the Year of the Rabbit.",
-                "<br>Let me tell you what will happen on this day in 2035, the next Year of the Rabbit.",
-                "<br>(Bunny is wagging its tail.)",
-                "<br>Look forward to it in 10 years!"
-
+                "<br>私　うさちゃん。2年前の干支。<br>次の兎年、2035年の今日何が起こるか占うね",
+                "<br>(うさちゃんはしっぽをフリフリしている。）",
+                "<br>１０年後、楽しみにしててねー"
             ];
 
             this.orders_usatyann = [
                 ["load"],
-                ["next"],
-                ["next"],
                 ["next"],
                 ["uranai","usatyann"],
                 ["next"],
