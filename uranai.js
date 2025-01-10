@@ -1495,6 +1495,25 @@ class DialogueSystem{
 
 class SiteSystem{
     constructor(){
+        this.ad_quiz = document.getElementById("quiz");
+        this.ad_uranai = document.getElementById("uranai");
+        this.ad_omikuzi = document.getElementById("omikuzi");
+        this.ad_Library = document.getElementById("library");
+
+        this.ad_quiz.addEventListener("click",()=>{
+            window.location.href = "https://yamatoaita.github.io/quiz.github.io/";
+        })
+        this.ad_uranai.addEventListener("click",()=>{
+            window.location.href = "https://yamatoaita.github.io/fortune-telling.github.io/";
+        })
+        this.ad_omikuzi.addEventListener("click",()=>{
+            window.location.href = "https://yamatoaita.github.io/omikuzi.github.io/";
+        })
+        this.ad_Library.addEventListener("click",()=>{
+            window.location.href = "https://yamatoaita.github.io/library.github.io/";
+        })
+
+
         this.make_fortunetellers_boxs();
 
         for (let i = 0; i < localStorage.length; i++) {
